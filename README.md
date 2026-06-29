@@ -1,8 +1,11 @@
 # 🐜 Formica Infinitum
+### *The Eternal Ant Legacy*
 
-### _The Eternal Ant Legacy_
+<p align="center">
+  <img src="assets/cover.png" alt="Formica Infinitum Cover" width="280"/>
+</p>
 
-> _"The world you live in is a surface. Beneath it is everything that has ever mattered."_
+> *"The world you live in is a surface. Beneath it is everything that has ever mattered."*
 
 ---
 
@@ -14,8 +17,8 @@ The story begins small: a warm phone, a notebook, a depth beneath the floor that
 
 ---
 
-**Genre:** Cultivation fantasy · Urban mystery · Hard science fiction
-**Setting:** Chengdu, China — and what lies beneath it
+**Genre:** Cultivation fantasy · Urban mystery · Hard science fiction  
+**Setting:** Chengdu, China — and what lies beneath it  
 **Status:** Ongoing
 
 ---
