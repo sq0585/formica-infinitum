@@ -83,6 +83,14 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 .bnav-btn.right{text-align:right;}
 .bnav-label{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--text-bright);display:block;margin-top:4px;letter-spacing:0;}
 
+/* ── CONTINUE BANNER ── */
+#continue-bar{display:none;margin:0 auto 0;max-width:760px;padding:0 20px;}
+#continue-btn{width:100%;background:var(--deep);border:none;border-left:3px solid var(--gold);padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .2s;margin-bottom:2px;}
+#continue-btn:hover{background:var(--surface);}
+#continue-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+#continue-title{font-family:'Cinzel',serif;font-size:14px;color:var(--text-bright);margin-top:3px;text-align:left;}
+#continue-arrow{color:var(--gold);font-size:18px;flex-shrink:0;}
+
 /* ── LOADING / ERROR ── */
 .state-msg{text-align:center;padding:80px 24px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;}
 .state-msg .icon{font-size:36px;display:block;margin-bottom:16px;}
@@ -117,6 +125,15 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
     <div class="hero-sub">The Eternal Ant Legacy</div>
     <h1>FORMICA INFINITUM</h1>
     <p class="hero-desc"><em>"The world you live in is a surface. Beneath it is everything that has ever mattered."</em></p>
+  </div>
+  <div id="continue-bar">
+    <button id="continue-btn" onclick="resumeReading()">
+      <div style="text-align:left">
+        <div id="continue-label">Continue Reading</div>
+        <div id="continue-title"></div>
+      </div>
+      <div id="continue-arrow">→</div>
+    </button>
   </div>
   <div class="list-wrap" id="chapter-list">
     <div class="state-msg"><span class="icon">⟳</span>Loading chapters...</div>
@@ -219,6 +236,44 @@ function inline(s) {
     .replace(/_(.+?)_/g, '<em>$1</em>');
 }
 
+// ── Persistence ──
+const STORAGE_KEY = 'formica_last';
+
+function saveProgress() {
+  if (currentIdx < 0) return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    idx: currentIdx,
+    scroll: window.scrollY
+  }));
+  location.hash = chapters[currentIdx].id;
+}
+
+function loadProgress() {
+  // honour URL hash first (direct chapter link)
+  const hash = location.hash.replace('#','');
+  if (hash) {
+    const i = chapters.findIndex(c => c.id === hash);
+    if (i >= 0) { loadChapter(i); return; }
+  }
+  // then localStorage
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && saved.idx >= 0 && saved.idx < chapters.length) {
+      const ch = chapters[saved.idx];
+      const num = String(saved.idx+1).padStart(2,'0');
+      document.getElementById('continue-title').textContent = `Ch.${num} — ${ch.title}`;
+      document.getElementById('continue-bar').style.display = 'block';
+      window._resumeScroll = saved.scroll || 0;
+    }
+  } catch(e) {}
+}
+
+function resumeReading() {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (!saved) return;
+  loadChapter(saved.idx, saved.scroll);
+}
+
 // ── Fetch chapters index ──
 async function init() {
   try {
@@ -227,6 +282,7 @@ async function init() {
     chapters = await r.json();
     renderList();
     updateArrows();
+    loadProgress();
   } catch(e) {
     document.getElementById('chapter-list').innerHTML =
       `<div class="state-msg"><span class="icon">⚠</span>${e.message}</div>`;
@@ -256,7 +312,7 @@ function renderList() {
 }
 
 // ── Load a chapter ──
-async function loadChapter(idx) {
+async function loadChapter(idx, restoreScroll = 0) {
   currentIdx = idx;
   const ch = chapters[idx];
   const num = String(idx+1).padStart(2,'0');
@@ -284,6 +340,7 @@ async function loadChapter(idx) {
     if (!r.ok) throw new Error(`Chapter file not found: ${ch.id}.md`);
     const md = await r.text();
     document.getElementById('prose-body').innerHTML = parseMd(md);
+    if (restoreScroll) setTimeout(() => window.scrollTo(0, restoreScroll), 50);
   } catch(e) {
     document.getElementById('prose-body').innerHTML =
       `<div class="state-msg"><span class="icon">⚠</span>${e.message}</div>`;
@@ -294,6 +351,7 @@ function showHome() {
   document.getElementById('view-home').style.display = 'block';
   document.getElementById('view-chapter').style.display = 'none';
   document.getElementById('breadcrumb').textContent = 'Arc I — The Night Shift';
+  location.hash = '';
   window.scrollTo(0,0);
 }
 
@@ -313,12 +371,13 @@ function updateArrows() {
   if (next) document.getElementById('bnav-next-title').textContent = chapters[currentIdx+1]?.title || '';
 }
 
-// ── Reading progress bar ──
+// ── Reading progress bar + save ──
 window.addEventListener('scroll', () => {
   const doc = document.documentElement;
   const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
   document.getElementById('progress').style.width = pct + '%';
   document.getElementById('scroll-top').classList.toggle('show', doc.scrollTop > 400);
+  if (document.getElementById('view-chapter').style.display !== 'none') saveProgress();
 });
 
 // ── Keyboard nav ──
