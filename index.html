@@ -73,14 +73,16 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 #prose-body em{color:var(--text-bright);font-style:italic;}
 #prose-body strong{color:var(--gold-pale);font-weight:600;}
 #prose-body hr{border:none;border-top:1px solid var(--ridge);margin:2.5em 0;}
-#prose-body blockquote{border-left:3px solid var(--gold-dim);padding:12px 20px;margin:1.5em 0;background:var(--deep);font-style:italic;color:var(--text-dim);}
+#prose-body blockquote{border-left:3px solid var(--gold-dim);padding:16px 20px;margin:1.5em 0;background:var(--deep);font-style:italic;color:var(--text-dim);}
+#prose-body blockquote p{margin-bottom:.9em;line-height:1.85;}
+#prose-body blockquote p:last-child{margin-bottom:0;}
 
 /* ── BOTTOM NAV ── */
 .bottom-nav{display:flex;gap:2px;margin-top:60px;border-top:1px solid var(--ridge);padding-top:24px;}
 .bnav-btn{flex:1;background:var(--deep);border:none;padding:16px 20px;cursor:pointer;color:var(--text-dim);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;transition:all .2s;text-align:left;}
-.bnav-btn:hover:not(:disabled){background:var(--surface);color:var(--gold);}
-.bnav-btn:disabled{opacity:.3;cursor:default;}
+.bnav-btn:hover{background:var(--surface);color:var(--gold);}
 .bnav-btn.right{text-align:right;}
+.bnav-btn.hidden{visibility:hidden;pointer-events:none;}
 .bnav-label{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--text-bright);display:block;margin-top:4px;letter-spacing:0;}
 
 /* ── CONTINUE BANNER ── */
@@ -150,10 +152,10 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
     </div>
     <div id="prose-body"><div class="state-msg"><span class="icon">⟳</span>Loading...</div></div>
     <div class="bottom-nav">
-      <button class="bnav-btn" id="bnav-prev" onclick="navigate(-1)" disabled>
+      <button class="bnav-btn" id="bnav-prev" onclick="navigate(-1)">
         ← Previous<span class="bnav-label" id="bnav-prev-title"></span>
       </button>
-      <button class="bnav-btn right" id="bnav-next" onclick="navigate(1)" disabled>
+      <button class="bnav-btn right" id="bnav-next" onclick="navigate(1)">
         Next →<span class="bnav-label" id="bnav-next-title"></span>
       </button>
     </div>
@@ -197,12 +199,18 @@ function parseMd(md) {
   const openP   = () => { if (!inP) { html += '<p>'; inP = true; } };
   const flushBq = () => {
     if (!bqLines.length) return;
-    // join consecutive blockquote lines into one block, preserving blank lines as <br><br>
-    let content = '';
+    // split on blank lines inside the blockquote → separate <p> tags
+    let content = '<p>';
     for (let j = 0; j < bqLines.length; j++) {
-      if (bqLines[j] === '') { content += '<br>'; }
-      else { content += (content && !content.endsWith('<br>') ? ' ' : '') + inline(bqLines[j]); }
+      if (bqLines[j] === '') {
+        content = content.trimEnd() + '</p><p>';
+      } else {
+        content += inline(bqLines[j]) + ' ';
+      }
     }
+    content = content.trimEnd() + '</p>';
+    // clean up empty paragraphs
+    content = content.replace(/<p>\s*<\/p>/g, '');
     html += `<blockquote>${content}</blockquote>\n`;
     bqLines = [];
   };
@@ -361,14 +369,30 @@ function navigate(dir) {
 }
 
 function updateArrows() {
-  const prev = currentIdx > 0;
-  const next = currentIdx < chapters.length - 1;
-  document.getElementById('btn-prev').disabled = !prev;
-  document.getElementById('btn-next').disabled = !next;
-  document.getElementById('bnav-prev').disabled = !prev;
-  document.getElementById('bnav-next').disabled = !next;
-  if (prev) document.getElementById('bnav-prev-title').textContent = chapters[currentIdx-1]?.title || '';
-  if (next) document.getElementById('bnav-next-title').textContent = chapters[currentIdx+1]?.title || '';
+  const hasPrev = currentIdx > 0;
+  const hasNext = currentIdx < chapters.length - 1;
+
+  // topbar arrows
+  document.getElementById('btn-prev').disabled = !hasPrev;
+  document.getElementById('btn-next').disabled = !hasNext;
+
+  // bottom prev
+  const bPrev = document.getElementById('bnav-prev');
+  if (hasPrev) {
+    bPrev.classList.remove('hidden');
+    document.getElementById('bnav-prev-title').textContent = chapters[currentIdx - 1].title;
+  } else {
+    bPrev.classList.add('hidden');
+  }
+
+  // bottom next
+  const bNext = document.getElementById('bnav-next');
+  if (hasNext) {
+    bNext.classList.remove('hidden');
+    document.getElementById('bnav-next-title').textContent = chapters[currentIdx + 1].title;
+  } else {
+    bNext.classList.add('hidden');
+  }
 }
 
 // ── Reading progress bar + save ──
