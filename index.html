@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formica Infinitum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:#07080c; --deep:#0d0f17; --surface:#131620; --ridge:#1c1f2e;
+  --gold:#c8a84b; --gold-dim:#6a5518; --gold-pale:#e8d49a; --amber:#e8b84b;
+  --text:#bcc0d0; --text-dim:#5a5e70; --text-bright:#eef0f8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.9;min-height:100vh;}
+
+/* ── TOPBAR ── */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,8,12,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--ridge);display:flex;align-items:center;gap:0;height:52px;}
+#home-btn{background:none;border:none;border-right:1px solid var(--ridge);padding:0 20px;height:100%;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;white-space:nowrap;transition:background .2s;}
+#home-btn:hover{background:var(--surface);}
+#home-btn span{font-size:22px;}
+#breadcrumb{padding:0 20px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#nav-arrows{display:flex;border-left:1px solid var(--ridge);}
+.nav-arr{background:none;border:none;border-right:1px solid var(--ridge);width:44px;height:52px;cursor:pointer;color:var(--text-dim);font-size:16px;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.nav-arr:last-child{border-right:none;}
+.nav-arr:hover:not(:disabled){color:var(--gold);background:var(--surface);}
+.nav-arr:disabled{opacity:.25;cursor:default;}
+
+/* ── VIEWS ── */
+#view-home,#view-chapter{padding-top:52px;}
+#view-chapter{display:none;}
+
+/* ── HERO ── */
+.hero{padding:72px 24px 56px;text-align:center;background:radial-gradient(ellipse 70% 50% at 50% 30%,#1a0e02,var(--void));position:relative;overflow:hidden;}
+.hex-bg{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100l-28-16V66l28 16 28-16v18L28 100z' fill='none' stroke='%23c8a84b' stroke-width='.5'/%3E%3C/svg%3E");background-size:56px 100px;}
+.ant-icon{font-size:56px;display:block;margin-bottom:14px;filter:drop-shadow(0 0 30px #c8a84b77);animation:glow 4s ease-in-out infinite;}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 20px #c8a84b44)}50%{filter:drop-shadow(0 0 50px #c8a84bcc)}}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(26px,5vw,54px);font-weight:900;color:var(--text-bright);letter-spacing:4px;text-shadow:0 0 40px #c8a84b33;}
+.hero-sub{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin:8px 0 18px;}
+.hero-desc{max-width:560px;margin:0 auto;font-style:italic;color:var(--text-dim);font-size:.95em;line-height:1.75;}
+
+/* ── CHAPTER LIST ── */
+.list-wrap{max-width:760px;margin:0 auto;padding:40px 20px 80px;}
+.arc-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;padding:28px 0 10px;display:flex;align-items:center;gap:12px;}
+.arc-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--gold-dim),transparent);}
+.ch-row{display:flex;align-items:stretch;margin-bottom:2px;cursor:pointer;transition:transform .15s;}
+.ch-row:hover{transform:translateX(4px);}
+.ch-row:hover .ch-num{background:var(--gold-dim);}
+.ch-row:hover .ch-body-row{background:var(--surface);}
+.ch-num{background:var(--deep);border-left:3px solid var(--gold);min-width:52px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:var(--gold);letter-spacing:1px;padding:4px 6px;transition:background .15s;}
+.ch-body-row{background:var(--deep);flex:1;padding:14px 18px;transition:background .15s;}
+.ch-title-row{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--text-bright);}
+.ch-arc-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-top:3px;}
+.ch-arrow{display:flex;align-items:center;padding:0 16px;background:var(--deep);color:var(--text-dim);font-size:13px;transition:background .15s;}
+.ch-row:hover .ch-arrow{color:var(--gold);background:var(--surface);}
+
+/* ── CHAPTER VIEW ── */
+.ch-view-inner{max-width:680px;margin:0 auto;padding:56px 24px 100px;}
+.ch-header{margin-bottom:48px;padding-bottom:28px;border-bottom:1px solid var(--ridge);}
+.ch-num-large{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.ch-title-large{font-family:'Cinzel',serif;font-size:clamp(20px,3vw,32px);font-weight:700;color:var(--text-bright);line-height:1.25;margin-bottom:6px;}
+.ch-arc-large{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;}
+
+/* ── PROSE ── */
+#prose-body{color:var(--text);font-size:1.05em;line-height:2;}
+#prose-body p{margin-bottom:1.4em;}
+#prose-body h1,#prose-body h2,#prose-body h3{font-family:'Cinzel',serif;color:var(--text-bright);margin:2em 0 .6em;line-height:1.3;}
+#prose-body h1{font-size:1.4em;}
+#prose-body h2{font-size:1.2em;color:var(--gold);}
+#prose-body h3{font-size:1em;letter-spacing:1px;text-transform:uppercase;color:var(--gold-pale);}
+#prose-body em{color:var(--text-bright);font-style:italic;}
+#prose-body strong{color:var(--gold-pale);font-weight:600;}
+#prose-body hr{border:none;border-top:1px solid var(--ridge);margin:2.5em 0;}
+#prose-body blockquote{border-left:3px solid var(--gold-dim);padding:12px 20px;margin:1.5em 0;background:var(--deep);font-style:italic;color:var(--text-dim);}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{display:flex;gap:2px;margin-top:60px;border-top:1px solid var(--ridge);padding-top:24px;}
+.bnav-btn{flex:1;background:var(--deep);border:none;padding:16px 20px;cursor:pointer;color:var(--text-dim);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;transition:all .2s;text-align:left;}
+.bnav-btn:hover:not(:disabled){background:var(--surface);color:var(--gold);}
+.bnav-btn:disabled{opacity:.3;cursor:default;}
+.bnav-btn.right{text-align:right;}
+.bnav-label{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--text-bright);display:block;margin-top:4px;letter-spacing:0;}
+
+/* ── LOADING / ERROR ── */
+.state-msg{text-align:center;padding:80px 24px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;}
+.state-msg .icon{font-size:36px;display:block;margin-bottom:16px;}
+
+/* ── PROGRESS BAR ── */
+#progress{position:fixed;top:52px;left:0;height:2px;background:var(--gold);width:0%;z-index:199;transition:width .1s;}
+
+/* ── SCROLL TOP ── */
+#scroll-top{position:fixed;bottom:28px;right:24px;width:40px;height:40px;background:var(--deep);border:1px solid var(--ridge);color:var(--text-dim);font-size:16px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .2s;z-index:150;}
+#scroll-top:hover{border-color:var(--gold);color:var(--gold);}
+#scroll-top.show{display:flex;}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <button id="home-btn" onclick="showHome()"><span>🐜</span> FORMICA INFINITUM</button>
+  <div id="breadcrumb">Arc I — The Night Shift</div>
+  <div id="nav-arrows">
+    <button class="nav-arr" id="btn-prev" onclick="navigate(-1)" disabled title="Previous chapter">‹</button>
+    <button class="nav-arr" id="btn-next" onclick="navigate(1)" disabled title="Next chapter">›</button>
+  </div>
+</div>
+
+<div id="progress"></div>
+
+<!-- HOME VIEW -->
+<div id="view-home">
+  <div class="hero">
+    <div class="hex-bg"></div>
+    <span class="ant-icon">🐜</span>
+    <div class="hero-sub">The Eternal Ant Legacy</div>
+    <h1>FORMICA INFINITUM</h1>
+    <p class="hero-desc"><em>"The world you live in is a surface. Beneath it is everything that has ever mattered."</em></p>
+  </div>
+  <div class="list-wrap" id="chapter-list">
+    <div class="state-msg"><span class="icon">⟳</span>Loading chapters...</div>
+  </div>
+</div>
+
+<!-- CHAPTER VIEW -->
+<div id="view-chapter">
+  <div class="ch-view-inner">
+    <div class="ch-header">
+      <div class="ch-num-large" id="ch-num-display">Chapter —</div>
+      <div class="ch-title-large" id="ch-title-display">—</div>
+      <div class="ch-arc-large" id="ch-arc-display">Arc I · The Night Shift</div>
+    </div>
+    <div id="prose-body"><div class="state-msg"><span class="icon">⟳</span>Loading...</div></div>
+    <div class="bottom-nav">
+      <button class="bnav-btn" id="bnav-prev" onclick="navigate(-1)" disabled>
+        ← Previous<span class="bnav-label" id="bnav-prev-title"></span>
+      </button>
+      <button class="bnav-btn right" id="bnav-next" onclick="navigate(1)" disabled>
+        Next →<span class="bnav-label" id="bnav-next-title"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const REPO = 'sq0585/formica-infinitum';
+const RAW  = `https://raw.githubusercontent.com/${REPO}/main`;
+const ARC_NAMES = { 1:'Arc I · The Night Shift', 2:'Arc II · The City Below', 3:'Arc III', 4:'Arc IV', 5:'Arc V', 6:'Arc VI', 7:'Arc VII' };
+
+let chapters = [], currentIdx = -1;
+
+// ── Simple Markdown renderer ──
+function mdToHtml(md) {
+  return md
+    .replace(/^#{1}\s+(.+)$/gm, '<h1>$1</h1>')
+    .replace(/^#{2}\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/^#{3}\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^---+$/gm, '<hr>')
+    .replace(/^>\s+(.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/^(?!<[h|b|e|h])/gm, '')
+    .split('\n').map(l => {
+      if (/^<(h[1-3]|hr|blockquote)/.test(l.trim())) return l;
+      return l;
+    }).join('\n')
+    .replace(/(<p>)?(<h[1-3]>)/g, '$2')
+    .replace(/(<\/h[1-3]>)(<\/p>)?/g, '$1');
+}
+
+function parseMd(md) {
+  const lines = md.split('\n');
+  let html = '', inP = false, bqLines = [];
+
+  const closeP  = () => { if (inP) { html += '</p>\n'; inP = false; } };
+  const openP   = () => { if (!inP) { html += '<p>'; inP = true; } };
+  const flushBq = () => {
+    if (!bqLines.length) return;
+    // join consecutive blockquote lines into one block, preserving blank lines as <br><br>
+    let content = '';
+    for (let j = 0; j < bqLines.length; j++) {
+      if (bqLines[j] === '') { content += '<br>'; }
+      else { content += (content && !content.endsWith('<br>') ? ' ' : '') + inline(bqLines[j]); }
+    }
+    html += `<blockquote>${content}</blockquote>\n`;
+    bqLines = [];
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    // blockquote line (including blank "> " continuation lines)
+    if (/^>\s?/.test(l)) {
+      closeP();
+      bqLines.push(l.replace(/^>\s?/, ''));
+      continue;
+    }
+    // leaving a blockquote block
+    if (bqLines.length) { flushBq(); }
+
+    const hl = l.match(/^(#{1,3})\s+(.*)/);
+    if (hl) { closeP(); const t = hl[1].length; html += `<h${t}>${inline(hl[2])}</h${t}>\n`; continue; }
+    if (/^---+$/.test(l.trim())) { closeP(); html += '<hr>\n'; continue; }
+    if (l.trim() === '') { closeP(); continue; }
+    openP(); html += inline(l) + ' ';
+  }
+  flushBq();
+  closeP();
+  return html;
+}
+
+function inline(s) {
+  return s
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/_(.+?)_/g, '<em>$1</em>');
+}
+
+// ── Fetch chapters index ──
+async function init() {
+  try {
+    const r = await fetch(`${RAW}/chapters.json`);
+    if (!r.ok) throw new Error('Could not load chapters.json');
+    chapters = await r.json();
+    renderList();
+    updateArrows();
+  } catch(e) {
+    document.getElementById('chapter-list').innerHTML =
+      `<div class="state-msg"><span class="icon">⚠</span>${e.message}</div>`;
+  }
+}
+
+// ── Render home list ──
+function renderList() {
+  const el = document.getElementById('chapter-list');
+  let html = '', lastArc = null;
+  chapters.forEach((ch, i) => {
+    if (ch.arc !== lastArc) {
+      html += `<div class="arc-label">${ARC_NAMES[ch.arc] || 'Arc ' + ch.arc}</div>`;
+      lastArc = ch.arc;
+    }
+    const num = String(i+1).padStart(2,'0');
+    html += `<div class="ch-row" onclick="loadChapter(${i})">
+      <div class="ch-num">Ch.${num}</div>
+      <div class="ch-body-row">
+        <div class="ch-title-row">${ch.title}</div>
+        <div class="ch-arc-tag">${ARC_NAMES[ch.arc] || ''}</div>
+      </div>
+      <div class="ch-arrow">›</div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+// ── Load a chapter ──
+async function loadChapter(idx) {
+  currentIdx = idx;
+  const ch = chapters[idx];
+  const num = String(idx+1).padStart(2,'0');
+
+  // Switch view
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-chapter').style.display = 'block';
+  window.scrollTo(0,0);
+
+  // Header
+  document.getElementById('ch-num-display').textContent = `Chapter ${num}`;
+  document.getElementById('ch-title-display').textContent = ch.title;
+  document.getElementById('ch-arc-display').textContent = ARC_NAMES[ch.arc] || '';
+  document.getElementById('breadcrumb').textContent = `Ch.${num} — ${ch.title}`;
+
+  // Nav buttons
+  updateArrows();
+
+  // Prose
+  document.getElementById('prose-body').innerHTML =
+    '<div class="state-msg"><span class="icon">⟳</span>Loading chapter...</div>';
+
+  try {
+    const r = await fetch(`${RAW}/chapters/${ch.id}.md`);
+    if (!r.ok) throw new Error(`Chapter file not found: ${ch.id}.md`);
+    const md = await r.text();
+    document.getElementById('prose-body').innerHTML = parseMd(md);
+  } catch(e) {
+    document.getElementById('prose-body').innerHTML =
+      `<div class="state-msg"><span class="icon">⚠</span>${e.message}</div>`;
+  }
+}
+
+function showHome() {
+  document.getElementById('view-home').style.display = 'block';
+  document.getElementById('view-chapter').style.display = 'none';
+  document.getElementById('breadcrumb').textContent = 'Arc I — The Night Shift';
+  window.scrollTo(0,0);
+}
+
+function navigate(dir) {
+  const next = currentIdx + dir;
+  if (next >= 0 && next < chapters.length) loadChapter(next);
+}
+
+function updateArrows() {
+  const prev = currentIdx > 0;
+  const next = currentIdx < chapters.length - 1;
+  document.getElementById('btn-prev').disabled = !prev;
+  document.getElementById('btn-next').disabled = !next;
+  document.getElementById('bnav-prev').disabled = !prev;
+  document.getElementById('bnav-next').disabled = !next;
+  if (prev) document.getElementById('bnav-prev-title').textContent = chapters[currentIdx-1]?.title || '';
+  if (next) document.getElementById('bnav-next-title').textContent = chapters[currentIdx+1]?.title || '';
+}
+
+// ── Reading progress bar ──
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('scroll-top').classList.toggle('show', doc.scrollTop > 400);
+});
+
+// ── Keyboard nav ──
+document.addEventListener('keydown', e => {
+  if (document.getElementById('view-chapter').style.display === 'none') return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  if (e.key === 'Escape') showHome();
+});
+
+init();
+</script>
+</body>
+</html>
