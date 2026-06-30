@@ -12,6 +12,7 @@
   --void:#07080c; --deep:#0d0f17; --surface:#131620; --ridge:#1c1f2e;
   --gold:#c8a84b; --gold-dim:#6a5518; --gold-pale:#e8d49a; --amber:#e8b84b;
   --text:#bcc0d0; --text-dim:#5a5e70; --text-bright:#eef0f8;
+  --arc-accent:#c8a84b; --arc-dim:#6a5518;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -19,15 +20,22 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 
 /* ── TOPBAR ── */
 #topbar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,8,12,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--ridge);display:flex;align-items:center;gap:0;height:52px;}
-#home-btn{background:none;border:none;border-right:1px solid var(--ridge);padding:0 20px;height:100%;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;white-space:nowrap;transition:background .2s;}
+#home-btn{background:none;border:none;border-right:1px solid var(--ridge);padding:0 14px;height:100%;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;white-space:nowrap;transition:background .2s;flex-shrink:0;}
 #home-btn:hover{background:var(--surface);}
-#home-btn span{font-size:22px;}
-#breadcrumb{padding:0 20px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-#nav-arrows{display:flex;border-left:1px solid var(--ridge);}
-.nav-arr{background:none;border:none;border-right:1px solid var(--ridge);width:44px;height:52px;cursor:pointer;color:var(--text-dim);font-size:16px;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+#home-btn span{font-size:20px;}
+#home-btn .home-label{display:inline;}
+#breadcrumb{padding:0 10px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#nav-arrows{display:flex;border-left:1px solid var(--ridge);flex-shrink:0;}
+.nav-arr{background:none;border:none;border-right:1px solid var(--ridge);width:40px;height:52px;cursor:pointer;color:var(--text-dim);font-size:16px;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .nav-arr:last-child{border-right:none;}
-.nav-arr:hover:not(:disabled){color:var(--gold);background:var(--surface);}
-.nav-arr:disabled{opacity:.25;cursor:default;}
+.nav-arr:hover{color:var(--gold);background:var(--surface);}
+.nav-arr.disabled{opacity:.25;pointer-events:none;}
+@media (max-width:480px){
+  #home-btn .home-label{display:none;}
+  #home-btn{padding:0 10px;}
+  #breadcrumb{font-size:8px;padding:0 8px;}
+  .nav-arr{width:36px;}
+}
 
 /* ── VIEWS ── */
 #view-home,#view-chapter{padding-top:52px;}
@@ -44,23 +52,23 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 
 /* ── CHAPTER LIST ── */
 .list-wrap{max-width:760px;margin:0 auto;padding:40px 20px 80px;}
-.arc-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;padding:28px 0 10px;display:flex;align-items:center;gap:12px;}
-.arc-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--gold-dim),transparent);}
+.arc-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:5px;text-transform:uppercase;padding:28px 0 10px;display:flex;align-items:center;gap:12px;}
+.arc-rule{flex:1;height:1px;display:block;}
 .ch-row{display:flex;align-items:stretch;margin-bottom:2px;cursor:pointer;transition:transform .15s;}
 .ch-row:hover{transform:translateX(4px);}
-.ch-row:hover .ch-num{background:var(--gold-dim);}
+.ch-row:hover .ch-num{background:var(--arc-dim);}
 .ch-row:hover .ch-body-row{background:var(--surface);}
-.ch-num{background:var(--deep);border-left:3px solid var(--gold);min-width:52px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:var(--gold);letter-spacing:1px;padding:4px 6px;transition:background .15s;}
+.ch-num{background:var(--deep);border-left:3px solid var(--arc-accent);min-width:52px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:var(--arc-accent);letter-spacing:1px;padding:4px 6px;transition:background .15s;}
 .ch-body-row{background:var(--deep);flex:1;padding:14px 18px;transition:background .15s;}
 .ch-title-row{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--text-bright);}
 .ch-arc-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-top:3px;}
 .ch-arrow{display:flex;align-items:center;padding:0 16px;background:var(--deep);color:var(--text-dim);font-size:13px;transition:background .15s;}
-.ch-row:hover .ch-arrow{color:var(--gold);background:var(--surface);}
+.ch-row:hover .ch-arrow{color:var(--arc-accent);background:var(--surface);}
 
 /* ── CHAPTER VIEW ── */
 .ch-view-inner{max-width:680px;margin:0 auto;padding:56px 24px 100px;}
 .ch-header{margin-bottom:48px;padding-bottom:28px;border-bottom:1px solid var(--ridge);}
-.ch-num-large{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.ch-num-large{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;color:var(--arc-accent);}
 .ch-title-large{font-family:'Cinzel',serif;font-size:clamp(20px,3vw,32px);font-weight:700;color:var(--text-bright);line-height:1.25;margin-bottom:6px;}
 .ch-arc-large{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;}
 
@@ -69,19 +77,20 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 #prose-body p{margin-bottom:1.4em;}
 #prose-body h1,#prose-body h2,#prose-body h3{font-family:'Cinzel',serif;color:var(--text-bright);margin:2em 0 .6em;line-height:1.3;}
 #prose-body h1{font-size:1.4em;}
-#prose-body h2{font-size:1.2em;color:var(--gold);}
+#prose-body h2{font-size:1.2em;color:var(--arc-accent);}
 #prose-body h3{font-size:1em;letter-spacing:1px;text-transform:uppercase;color:var(--gold-pale);}
 #prose-body em{color:var(--text-bright);font-style:italic;}
 #prose-body strong{color:var(--gold-pale);font-weight:600;}
 #prose-body hr{border:none;border-top:1px solid var(--ridge);margin:2.5em 0;}
-#prose-body blockquote{border-left:3px solid var(--gold-dim);padding:16px 20px;margin:1.5em 0;background:var(--deep);font-style:italic;color:var(--text-dim);}
+#prose-body blockquote{border-left:3px solid var(--arc-dim);padding:16px 20px;margin:1.5em 0;background:var(--deep);font-style:italic;color:var(--text-dim);}
 #prose-body blockquote p{margin-bottom:.9em;line-height:1.85;}
 #prose-body blockquote p:last-child{margin-bottom:0;}
+.tts-sentence.tts-reading{background:rgba(200,168,75,.16);border-radius:2px;transition:background .25s;}
 
 /* ── BOTTOM NAV ── */
 .bottom-nav{display:flex;gap:2px;margin-top:60px;border-top:1px solid var(--ridge);padding-top:24px;}
 .bnav-btn{flex:1;background:var(--deep);border:none;padding:16px 20px;cursor:pointer;color:var(--text-dim);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;transition:all .2s;text-align:left;}
-.bnav-btn:hover{background:var(--surface);color:var(--gold);}
+.bnav-btn:hover{background:var(--surface);color:var(--arc-accent);}
 .bnav-btn.right{text-align:right;}
 .bnav-btn.hidden{visibility:hidden;pointer-events:none;}
 .bnav-label{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--text-bright);display:block;margin-top:4px;letter-spacing:0;}
@@ -99,22 +108,36 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 .state-msg .icon{font-size:36px;display:block;margin-bottom:16px;}
 
 /* ── PROGRESS BAR ── */
-#progress{position:fixed;top:52px;left:0;height:2px;background:var(--gold);width:0%;z-index:199;transition:width .1s;}
+#progress{position:fixed;top:52px;left:0;height:2px;background:var(--arc-accent);width:0%;z-index:199;transition:width .1s;}
 
 /* ── SCROLL TOP ── */
 #scroll-top{position:fixed;bottom:28px;right:24px;width:40px;height:40px;background:var(--deep);border:1px solid var(--ridge);color:var(--text-dim);font-size:16px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .2s;z-index:150;}
 #scroll-top:hover{border-color:var(--gold);color:var(--gold);}
 #scroll-top.show{display:flex;}
+
+/* ── TTS PLAYER (easter egg) ── */
+#tts-bar{position:fixed;bottom:0;left:0;right:0;z-index:190;background:rgba(7,8,12,.97);backdrop-filter:blur(16px);border-top:1px solid var(--ridge);display:none;align-items:center;gap:10px;padding:10px 16px;flex-wrap:wrap;}
+#tts-bar.active{display:flex;}
+.tts-btn{background:var(--deep);border:1px solid var(--ridge);color:var(--arc-accent);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all .15s;}
+.tts-btn:hover{border-color:var(--arc-accent);}
+.tts-btn.primary{width:42px;height:42px;background:var(--arc-dim);border-color:var(--arc-accent);color:var(--text-bright);}
+#tts-label,#tts-label-pitch{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;flex-shrink:0;}
+#tts-rate,#tts-pitch{width:60px;accent-color:var(--arc-accent);}
+#tts-voice{background:var(--deep);border:1px solid var(--ridge);color:var(--text-dim);font-family:'Space Mono',monospace;font-size:9px;padding:6px 8px;max-width:140px;flex-shrink:1;}
+.tts-toggle{background:none;border:1px solid var(--ridge);color:var(--arc-accent);cursor:pointer;display:none;align-items:center;gap:8px;font-family:'Cinzel',serif;font-weight:700;font-size:13px;letter-spacing:1px;padding:8px 14px;transition:all .2s;}
+.tts-toggle.unlocked{display:flex;}
+.tts-toggle:hover{border-color:var(--arc-accent);background:var(--surface);}
+.tts-spacer{flex:1;}
 </style>
 </head>
 <body>
 
 <div id="topbar">
-  <button id="home-btn" onclick="showHome()"><span>🐜</span> FORMICA INFINITUM</button>
+  <button id="home-btn" onclick="handleAntClick()"><span>🐜</span><span class="home-label">FORMICA INFINITUM</span></button>
   <div id="breadcrumb">Arc I — The Night Shift</div>
   <div id="nav-arrows">
-    <button class="nav-arr" id="btn-prev" onclick="navigate(-1)" disabled title="Previous chapter">‹</button>
-    <button class="nav-arr" id="btn-next" onclick="navigate(1)" disabled title="Next chapter">›</button>
+    <button class="nav-arr disabled" id="btn-prev" onclick="navigate(-1)" title="Previous chapter">‹</button>
+    <button class="nav-arr disabled" id="btn-next" onclick="navigate(1)" title="Next chapter">›</button>
   </div>
 </div>
 
@@ -152,6 +175,9 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
       <div class="ch-num-large" id="ch-num-display">Chapter —</div>
       <div class="ch-title-large" id="ch-title-display">—</div>
       <div class="ch-arc-large" id="ch-arc-display">Arc I · The Night Shift</div>
+      <button class="tts-toggle" id="tts-toggle-btn" onclick="toggleTTS()" style="margin-top:18px">
+        🔊 <span id="tts-toggle-label">Listen to this chapter</span>
+      </button>
     </div>
     <div id="prose-body"><div class="state-msg"><span class="icon">⟳</span>Loading...</div></div>
     <div class="bottom-nav">
@@ -167,33 +193,36 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
+<div id="tts-bar">
+  <button class="tts-btn primary" id="tts-play" onclick="ttsPlayPause()" title="Play/Pause">▶</button>
+  <button class="tts-btn" onclick="ttsStop()" title="Stop">■</button>
+  <span id="tts-label">Speed</span>
+  <input type="range" id="tts-rate" min="0.6" max="2" step="0.1" value="1" oninput="ttsRateChange(this.value)">
+  <span id="tts-label-pitch">Pitch</span>
+  <input type="range" id="tts-pitch" min="0" max="2" step="0.1" value="1" oninput="ttsPitchChange(this.value)">
+  <select id="tts-voice" onchange="ttsVoiceChange()"></select>
+  <div class="tts-spacer"></div>
+  <button class="tts-btn" onclick="closeTTS()" title="Close">✕</button>
+</div>
+
 <script>
 const REPO = 'sq0585/formica-infinitum';
 const RAW  = `https://raw.githubusercontent.com/${REPO}/main`;
 const ARC_NAMES = { 1:'Arc I · The Night Shift', 2:'Arc II · The City Below', 3:'Arc III', 4:'Arc IV', 5:'Arc V', 6:'Arc VI', 7:'Arc VII' };
+const ARC_COLORS = {
+  1: { accent:'#c8a84b', dim:'#6a5518' },
+  2: { accent:'#5bb8d4', dim:'#1f4a57' },
+  3: { accent:'#e08a3c', dim:'#6e3d15' },
+  4: { accent:'#b07ce0', dim:'#4a2e6e' },
+  5: { accent:'#4cd49a', dim:'#155e3f' },
+  6: { accent:'#4c9ed4', dim:'#15405e' },
+  7: { accent:'#e0524c', dim:'#6e1815' }
+};
+function arcColor(arc) { return ARC_COLORS[arc] || ARC_COLORS[1]; }
 
 let chapters = [], currentIdx = -1;
 
 // ── Simple Markdown renderer ──
-function mdToHtml(md) {
-  return md
-    .replace(/^#{1}\s+(.+)$/gm, '<h1>$1</h1>')
-    .replace(/^#{2}\s+(.+)$/gm, '<h2>$1</h2>')
-    .replace(/^#{3}\s+(.+)$/gm, '<h3>$1</h3>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/^---+$/gm, '<hr>')
-    .replace(/^>\s+(.+)$/gm, '<blockquote>$1</blockquote>')
-    .replace(/\n{2,}/g, '</p><p>')
-    .replace(/^(?!<[h|b|e|h])/gm, '')
-    .split('\n').map(l => {
-      if (/^<(h[1-3]|hr|blockquote)/.test(l.trim())) return l;
-      return l;
-    }).join('\n')
-    .replace(/(<p>)?(<h[1-3]>)/g, '$2')
-    .replace(/(<\/h[1-3]>)(<\/p>)?/g, '$1');
-}
-
 function parseMd(md) {
   const lines = md.split('\n');
   let html = '', inP = false, bqLines = [];
@@ -202,7 +231,6 @@ function parseMd(md) {
   const openP   = () => { if (!inP) { html += '<p>'; inP = true; } };
   const flushBq = () => {
     if (!bqLines.length) return;
-    // split on blank lines inside the blockquote → separate <p> tags
     let content = '<p>';
     for (let j = 0; j < bqLines.length; j++) {
       if (bqLines[j] === '') {
@@ -212,7 +240,6 @@ function parseMd(md) {
       }
     }
     content = content.trimEnd() + '</p>';
-    // clean up empty paragraphs
     content = content.replace(/<p>\s*<\/p>/g, '');
     html += `<blockquote>${content}</blockquote>\n`;
     bqLines = [];
@@ -220,13 +247,11 @@ function parseMd(md) {
 
   for (let i = 0; i < lines.length; i++) {
     const l = lines[i];
-    // blockquote line (including blank "> " continuation lines)
     if (/^>\s?/.test(l)) {
       closeP();
       bqLines.push(l.replace(/^>\s?/, ''));
       continue;
     }
-    // leaving a blockquote block
     if (bqLines.length) { flushBq(); }
 
     const hl = l.match(/^(#{1,3})\s+(.*)/);
@@ -247,6 +272,26 @@ function inline(s) {
     .replace(/_(.+?)_/g, '<em>$1</em>');
 }
 
+// Remove a leading H1/H2 line that duplicates the chapter title already
+// shown in the page header (e.g. "# Chapter Twenty — The Second Message")
+function stripDuplicateTitle(md, title) {
+  const lines = md.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const t = lines[i].trim();
+    if (t === '') continue;
+    const m = t.match(/^#{1,2}\s+(.*)/);
+    if (m) {
+      const headingText = m[1].toLowerCase();
+      const cleanTitle = title.toLowerCase();
+      if (headingText.includes(cleanTitle) || /^chapter\s/i.test(m[1])) {
+        lines.splice(i, 1);
+      }
+    }
+    break;
+  }
+  return lines.join('\n');
+}
+
 // ── Persistence ──
 const STORAGE_KEY = 'formica_last';
 
@@ -260,13 +305,11 @@ function saveProgress() {
 }
 
 function loadProgress() {
-  // honour URL hash first (direct chapter link)
   const hash = location.hash.replace('#','');
   if (hash) {
     const i = chapters.findIndex(c => c.id === hash);
     if (i >= 0) { loadChapter(i); return; }
   }
-  // then localStorage
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (saved && saved.idx >= 0 && saved.idx < chapters.length) {
@@ -306,11 +349,13 @@ function renderList() {
   let html = '', lastArc = null;
   chapters.forEach((ch, i) => {
     if (ch.arc !== lastArc) {
-      html += `<div class="arc-label">${ARC_NAMES[ch.arc] || 'Arc ' + ch.arc}</div>`;
+      const c = arcColor(ch.arc);
+      html += `<div class="arc-label" style="color:${c.accent}">${ARC_NAMES[ch.arc] || 'Arc ' + ch.arc}<span class="arc-rule" style="background:linear-gradient(to right,${c.dim},transparent)"></span></div>`;
       lastArc = ch.arc;
     }
+    const c = arcColor(ch.arc);
     const num = String(i+1).padStart(2,'0');
-    html += `<div class="ch-row" onclick="loadChapter(${i})">
+    html += `<div class="ch-row" onclick="loadChapter(${i})" style="--arc-accent:${c.accent};--arc-dim:${c.dim}">
       <div class="ch-num">Ch.${num}</div>
       <div class="ch-body-row">
         <div class="ch-title-row">${ch.title}</div>
@@ -328,21 +373,28 @@ async function loadChapter(idx, restoreScroll = 0) {
   const ch = chapters[idx];
   const num = String(idx+1).padStart(2,'0');
 
-  // Switch view
+  // reset TTS for the new chapter
+  ttsStop();
+  document.getElementById('tts-bar').classList.remove('active');
+  ttsActive = false;
+  document.getElementById('tts-toggle-label').textContent = 'Listen to this chapter';
+
   document.getElementById('view-home').style.display = 'none';
   document.getElementById('view-chapter').style.display = 'block';
   window.scrollTo(0,0);
 
-  // Header
+  // Header + arc theming
   document.getElementById('ch-num-display').textContent = `Chapter ${num}`;
   document.getElementById('ch-title-display').textContent = ch.title;
   document.getElementById('ch-arc-display').textContent = ARC_NAMES[ch.arc] || '';
   document.getElementById('breadcrumb').textContent = `Ch.${num} — ${ch.title}`;
 
-  // Nav buttons
+  const c = arcColor(ch.arc);
+  document.documentElement.style.setProperty('--arc-accent', c.accent);
+  document.documentElement.style.setProperty('--arc-dim', c.dim);
+
   updateArrows();
 
-  // Prose
   document.getElementById('prose-body').innerHTML =
     '<div class="state-msg"><span class="icon">⟳</span>Loading chapter...</div>';
 
@@ -350,7 +402,8 @@ async function loadChapter(idx, restoreScroll = 0) {
     const r = await fetch(`${RAW}/chapters/${ch.id}.md`);
     if (!r.ok) throw new Error(`Chapter file not found: ${ch.id}.md`);
     const md = await r.text();
-    document.getElementById('prose-body').innerHTML = parseMd(md);
+    document.getElementById('prose-body').innerHTML = parseMd(stripDuplicateTitle(md, ch.title));
+    document.getElementById('prose-body').dataset.ttsReady = '';
     if (restoreScroll) setTimeout(() => window.scrollTo(0, restoreScroll), 50);
   } catch(e) {
     document.getElementById('prose-body').innerHTML =
@@ -366,6 +419,31 @@ function showHome() {
   window.scrollTo(0,0);
 }
 
+// ── Easter egg: tap the ant icon 5x to unlock the listen player ──
+let antTapCount = 0;
+let antTapTimer = null;
+let ttsUnlocked = false;
+
+function handleAntClick() {
+  showHome();
+  antTapCount++;
+  clearTimeout(antTapTimer);
+  antTapTimer = setTimeout(() => { antTapCount = 0; }, 1500);
+  if (antTapCount >= 5) {
+    antTapCount = 0;
+    unlockTTS();
+  }
+}
+
+function unlockTTS() {
+  if (ttsUnlocked) return;
+  ttsUnlocked = true;
+  document.getElementById('tts-toggle-btn').classList.add('unlocked');
+  const home = document.getElementById('home-btn');
+  home.style.color = 'var(--amber)';
+  setTimeout(() => { home.style.color = ''; }, 600);
+}
+
 function navigate(dir) {
   const next = currentIdx + dir;
   if (next >= 0 && next < chapters.length) loadChapter(next);
@@ -375,11 +453,11 @@ function updateArrows() {
   const hasPrev = currentIdx > 0;
   const hasNext = currentIdx < chapters.length - 1;
 
-  // topbar arrows
-  document.getElementById('btn-prev').disabled = !hasPrev;
-  document.getElementById('btn-next').disabled = !hasNext;
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  btnPrev.classList.toggle('disabled', !hasPrev);
+  btnNext.classList.toggle('disabled', !hasNext);
 
-  // bottom prev
   const bPrev = document.getElementById('bnav-prev');
   if (hasPrev) {
     bPrev.classList.remove('hidden');
@@ -388,7 +466,6 @@ function updateArrows() {
     bPrev.classList.add('hidden');
   }
 
-  // bottom next
   const bNext = document.getElementById('bnav-next');
   if (hasNext) {
     bNext.classList.remove('hidden');
@@ -414,6 +491,166 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
   if (e.key === 'Escape') showHome();
 });
+
+// ── Text-to-Speech (free, browser-native, works on mobile + desktop) ──
+let ttsUtterances = [];
+let ttsIdx = 0;
+let ttsActive = false;
+let ttsPaused = false;
+let ttsVoices = [];
+let ttsRate = 1;
+let ttsPitch = 1;
+
+function loadVoices() {
+  const all = speechSynthesis.getVoices();
+  ttsVoices = all.filter(v => v.lang === 'en-GB' || v.lang === 'en-US');
+  if (!ttsVoices.length) ttsVoices = all.filter(v => v.lang.startsWith('en'));
+  if (!ttsVoices.length) ttsVoices = all;
+  const sel = document.getElementById('tts-voice');
+  sel.innerHTML = ttsVoices.map((v,i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('');
+}
+if ('speechSynthesis' in window) {
+  speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function getProseSentences() {
+  const body = document.getElementById('prose-body');
+  if (!body.dataset.ttsReady) {
+    const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null);
+    const textNodes = [];
+    let n;
+    while (n = walker.nextNode()) {
+      if (n.nodeValue.trim()) textNodes.push(n);
+    }
+    textNodes.forEach(node => {
+      const parts = node.nodeValue.match(/[^.!?]+[.!?]*\s*/g) || [node.nodeValue];
+      const frag = document.createDocumentFragment();
+      parts.forEach(p => {
+        const span = document.createElement('span');
+        span.className = 'tts-sentence';
+        span.textContent = p;
+        frag.appendChild(span);
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+    body.dataset.ttsReady = '1';
+  }
+  return Array.from(body.querySelectorAll('.tts-sentence')).filter(s => s.textContent.trim());
+}
+
+function toggleTTS() {
+  if (!('speechSynthesis' in window)) {
+    alert('Text-to-speech is not supported in this browser.');
+    return;
+  }
+  ttsActive = !ttsActive;
+  document.getElementById('tts-bar').classList.toggle('active', ttsActive);
+  document.getElementById('tts-toggle-label').textContent = ttsActive ? 'Hide listen player' : 'Listen to this chapter';
+  if (!ttsActive) ttsStop();
+}
+
+function closeTTS() {
+  ttsActive = false;
+  document.getElementById('tts-bar').classList.remove('active');
+  document.getElementById('tts-toggle-label').textContent = 'Listen to this chapter';
+  ttsStop();
+}
+
+function buildQueue() {
+  const sentences = getProseSentences();
+  ttsUtterances = sentences.map((span, i) => {
+    const u = new SpeechSynthesisUtterance(span.textContent);
+    u.rate = ttsRate;
+    u.pitch = ttsPitch;
+    const voiceIdx = document.getElementById('tts-voice').value;
+    if (ttsVoices[voiceIdx]) u.voice = ttsVoices[voiceIdx];
+    u.onstart = () => {
+      document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
+      span.classList.add('tts-reading');
+      span.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    };
+    u.onend = () => {
+      if (ttsActive && !ttsPaused && i === ttsIdx) {
+        ttsIdx++;
+        if (ttsIdx < ttsUtterances.length) {
+          speechSynthesis.speak(ttsUtterances[ttsIdx]);
+        } else {
+          ttsFinished();
+        }
+      }
+    };
+    return u;
+  });
+}
+
+function ttsFinished() {
+  document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
+  document.getElementById('tts-play').textContent = '▶';
+  ttsIdx = 0;
+}
+
+function ttsPlayPause() {
+  const btn = document.getElementById('tts-play');
+  if (speechSynthesis.speaking && !speechSynthesis.paused) {
+    speechSynthesis.pause();
+    ttsPaused = true;
+    btn.textContent = '▶';
+    return;
+  }
+  if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+    ttsPaused = false;
+    btn.textContent = '⏸';
+    return;
+  }
+  if (!ttsUtterances.length) buildQueue();
+  ttsPaused = false;
+  btn.textContent = '⏸';
+  speechSynthesis.speak(ttsUtterances[ttsIdx]);
+}
+
+function ttsStop() {
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  ttsUtterances = [];
+  ttsIdx = 0;
+  ttsPaused = false;
+  const btn = document.getElementById('tts-play');
+  if (btn) btn.textContent = '▶';
+  document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
+}
+
+function ttsRateChange(val) {
+  ttsRate = parseFloat(val);
+  if (speechSynthesis.speaking) {
+    const wasIdx = ttsIdx;
+    speechSynthesis.cancel();
+    buildQueue();
+    ttsIdx = wasIdx;
+    speechSynthesis.speak(ttsUtterances[ttsIdx]);
+  }
+}
+
+function ttsPitchChange(val) {
+  ttsPitch = parseFloat(val);
+  if (speechSynthesis.speaking) {
+    const wasIdx = ttsIdx;
+    speechSynthesis.cancel();
+    buildQueue();
+    ttsIdx = wasIdx;
+    speechSynthesis.speak(ttsUtterances[ttsIdx]);
+  }
+}
+
+function ttsVoiceChange() {
+  if (speechSynthesis.speaking || ttsUtterances.length) {
+    const wasIdx = ttsIdx;
+    speechSynthesis.cancel();
+    buildQueue();
+    ttsIdx = wasIdx;
+    if (!ttsPaused) speechSynthesis.speak(ttsUtterances[ttsIdx]);
+  }
+}
 
 init();
 </script>
