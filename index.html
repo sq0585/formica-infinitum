@@ -272,24 +272,23 @@ function inline(s) {
     .replace(/_(.+?)_/g, '<em>$1</em>');
 }
 
-// Remove a leading H1/H2 line that duplicates the chapter title already
-// shown in the page header (e.g. "# Chapter Twenty — The Second Message")
+// Remove leading front-matter lines that duplicate what's already shown in
+// the page header (book title, series name, arc name, chapter heading, etc.)
+// Strips any leading run of heading lines, divider lines, and blank lines
+// until it hits the first real paragraph of prose.
 function stripDuplicateTitle(md, title) {
   const lines = md.split('\n');
-  for (let i = 0; i < lines.length; i++) {
+  let i = 0;
+
+  while (i < lines.length) {
     const t = lines[i].trim();
-    if (t === '') continue;
-    const m = t.match(/^#{1,2}\s+(.*)/);
-    if (m) {
-      const headingText = m[1].toLowerCase();
-      const cleanTitle = title.toLowerCase();
-      if (headingText.includes(cleanTitle) || /^chapter\s/i.test(m[1])) {
-        lines.splice(i, 1);
-      }
-    }
-    break;
+    if (t === '') { i++; continue; }
+    if (/^#{1,3}\s+/.test(t)) { i++; continue; }
+    if (/^---+$/.test(t)) { i++; continue; }
+    break; // hit the first real content line
   }
-  return lines.join('\n');
+
+  return lines.slice(i).join('\n');
 }
 
 // ── Persistence ──
@@ -502,12 +501,10 @@ let ttsRate = 1;
 let ttsPitch = 1;
 
 function loadVoices() {
-  const all = speechSynthesis.getVoices();
-  ttsVoices = all.filter(v => v.lang === 'en-GB' || v.lang === 'en-US');
-  if (!ttsVoices.length) ttsVoices = all.filter(v => v.lang.startsWith('en'));
-  if (!ttsVoices.length) ttsVoices = all;
+  ttsVoices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+  if (!ttsVoices.length) ttsVoices = speechSynthesis.getVoices();
   const sel = document.getElementById('tts-voice');
-  sel.innerHTML = ttsVoices.map((v,i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('');
+  sel.innerHTML = ttsVoices.map((v,i) => `<option value="${i}">${v.name}</option>`).join('');
 }
 if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = loadVoices;
