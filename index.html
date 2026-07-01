@@ -20,7 +20,7 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 
 /* ── TOPBAR ── */
 #topbar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,8,12,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--ridge);display:flex;align-items:center;gap:0;height:52px;}
-#home-btn{background:none;border:none;border-right:1px solid var(--ridge);padding:0 14px;height:100%;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;white-space:nowrap;transition:background .2s;flex-shrink:0;}
+#home-btn{background:none;border:none;border-right:1px solid var(--ridge);padding:0 14px;height:100%;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;white-space:nowrap;transition:background .2s;flex-shrink:0;touch-action:none;}
 #home-btn:hover{background:var(--surface);}
 #home-btn span{font-size:20px;}
 #home-btn .home-label{display:inline;}
@@ -128,12 +128,38 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 .tts-toggle.unlocked{display:flex;}
 .tts-toggle:hover{border-color:var(--arc-accent);background:var(--surface);}
 .tts-spacer{flex:1;}
+
+/* ── GESTURE OVERLAY ── */
+#gesture-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+#gesture-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(19, 22, 32, 0.95);
+  border: 1px solid var(--ridge);
+  padding: 10px 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text);
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 </style>
 </head>
 <body>
 
 <div id="topbar">
-  <button id="home-btn" onclick="handleAntClick()"><span>🐜</span><span class="home-label">FORMICA INFINITUM</span></button>
+  <button id="home-btn" title="Formica Infinitum (Home) · Trace the sacred geometry of the hive to unlock the voice..."><span>🐜</span><span class="home-label">FORMICA INFINITUM</span></button>
   <div id="breadcrumb">Arc I — The Night Shift</div>
   <div id="nav-arrows">
     <button class="nav-arr disabled" id="btn-prev" onclick="navigate(-1)" title="Previous chapter">‹</button>
@@ -204,6 +230,9 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
   <div class="tts-spacer"></div>
   <button class="tts-btn" onclick="closeTTS()" title="Close">✕</button>
 </div>
+
+<canvas id="gesture-canvas"></canvas>
+<div id="gesture-toast"></div>
 
 <script>
 const REPO = 'sq0585/formica-infinitum';
@@ -418,7 +447,7 @@ function showHome() {
   window.scrollTo(0,0);
 }
 
-// ── Easter egg: tap the ant icon 5x to unlock the listen player ──
+// ── Easter egg: trace the sacred shape to unlock the listen player (or tap the ant icon 5x) ──
 let antTapCount = 0;
 let antTapTimer = null;
 let ttsUnlocked = false;
@@ -431,6 +460,7 @@ function handleAntClick() {
   if (antTapCount >= 5) {
     antTapCount = 0;
     unlockTTS();
+    showToast("A persistent searcher unlocks the voice.", true);
   }
 }
 
@@ -442,6 +472,407 @@ function unlockTTS() {
   home.style.color = 'var(--amber)';
   setTimeout(() => { home.style.color = ''; }, 600);
 }
+
+// ── Gesture Tracking & Shape Recognition ──
+let isDrawing = false;
+let hasMoved = false;
+let startX = 0, startY = 0;
+let drawnPoints = [];
+let pathAlpha = 0;
+let animId = null;
+let particles = [];
+
+const canvas = document.getElementById('gesture-canvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+}
+
+class Particle {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.vx = (Math.random() - 0.5) * 4;
+    this.vy = (Math.random() - 0.5) * 4;
+    this.radius = Math.random() * 3 + 2;
+    this.alpha = 1;
+    this.decay = Math.random() * 0.02 + 0.015;
+    this.color = color || '#c8a84b';
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.alpha -= this.decay;
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.alpha;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = this.color;
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+function createParticle(x, y, color) {
+  particles.push(new Particle(x, y, color));
+}
+
+function startAnimLoop() {
+  if (!animId) {
+    animId = requestAnimationFrame(drawLoop);
+  }
+}
+
+function drawLoop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Update and draw particles
+  particles = particles.filter(p => p.alpha > 0);
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  
+  // Draw path
+  if (drawnPoints.length > 1 && pathAlpha > 0) {
+    ctx.save();
+    ctx.globalAlpha = pathAlpha;
+    ctx.beginPath();
+    ctx.moveTo(drawnPoints[0].x, drawnPoints[0].y);
+    for (let i = 1; i < drawnPoints.length; i++) {
+      ctx.lineTo(drawnPoints[i].x, drawnPoints[i].y);
+    }
+    ctx.strokeStyle = '#c8a84b';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#e8b84b';
+    ctx.stroke();
+    ctx.restore();
+    
+    if (!isDrawing) {
+      pathAlpha -= 0.05;
+    }
+  }
+  
+  if (particles.length > 0 || (drawnPoints.length > 1 && pathAlpha > 0) || isDrawing) {
+    animId = requestAnimationFrame(drawLoop);
+  } else {
+    animId = null;
+  }
+}
+
+function triggerGoldBurst() {
+  const c = centroid(drawnPoints);
+  const colors = ['#e8d49a', '#c8a84b', '#e8b84b', '#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    const p = new Particle(c.x, c.y, colors[Math.floor(Math.random() * colors.length)]);
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 8 + 3;
+    p.vx = Math.cos(angle) * speed;
+    p.vy = Math.sin(angle) * speed;
+    p.radius = Math.random() * 4 + 2;
+    p.decay = Math.random() * 0.01 + 0.01;
+    particles.push(p);
+  }
+  startAnimLoop();
+}
+
+function triggerFailureGlow() {
+  const lastPt = drawnPoints[drawnPoints.length - 1];
+  for (let i = 0; i < 20; i++) {
+    const p = new Particle(lastPt.x, lastPt.y, '#e0524c');
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 3 + 1;
+    p.vx = Math.cos(angle) * speed;
+    p.vy = Math.sin(angle) * speed;
+    p.decay = 0.03;
+    particles.push(p);
+  }
+  startAnimLoop();
+}
+
+function showToast(msg, isSuccess) {
+  const toast = document.getElementById('gesture-toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.style.borderColor = isSuccess ? 'var(--gold)' : '#e0524c';
+  toast.style.color = isSuccess ? 'var(--gold-pale)' : '#eef0f8';
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  
+  clearTimeout(toast.timeout);
+  toast.timeout = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2500);
+}
+
+// ── Math & Recognizer Utils ──
+function distance(p1, p2) {
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function pathLength(points) {
+  let d = 0;
+  for (let i = 1; i < points.length; i++) {
+    d += distance(points[i - 1], points[i]);
+  }
+  return d;
+}
+
+function resample(points, n) {
+  const pts = points.map(p => ({ x: p.x, y: p.y }));
+  const I = pathLength(pts) / (n - 1);
+  let D = 0;
+  const newPoints = [{ x: pts[0].x, y: pts[0].y }];
+  let i = 1;
+  while (i < pts.length) {
+    const p1 = pts[i - 1];
+    const p2 = pts[i];
+    const d = distance(p1, p2);
+    if (d === 0) {
+      i++;
+      continue;
+    }
+    if ((D + d) >= I) {
+      const t = (I - D) / d;
+      const q = {
+        x: p1.x + t * (p2.x - p1.x),
+        y: p1.y + t * (p2.y - p1.y)
+      };
+      newPoints.push(q);
+      pts[i - 1] = q;
+      D = 0;
+    } else {
+      D += d;
+      i++;
+    }
+  }
+  while (newPoints.length < n) {
+    newPoints.push({ x: points[points.length - 1].x, y: points[points.length - 1].y });
+  }
+  return newPoints.slice(0, n);
+}
+
+function centroid(points) {
+  let x = 0, y = 0;
+  for (let i = 0; i < points.length; i++) {
+    x += points[i].x;
+    y += points[i].y;
+  }
+  return { x: x / points.length, y: y / points.length };
+}
+
+function boundingBox(points) {
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (let i = 0; i < points.length; i++) {
+    minX = Math.min(minX, points[i].x);
+    maxX = Math.max(maxX, points[i].x);
+    minY = Math.min(minY, points[i].y);
+    maxY = Math.max(maxY, points[i].y);
+  }
+  return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+}
+
+function scaleTo(points, size) {
+  const box = boundingBox(points);
+  const maxDim = Math.max(box.width, box.height, 1);
+  const newPoints = [];
+  for (let i = 0; i < points.length; i++) {
+    const px = points[i].x * (size / maxDim);
+    const py = points[i].y * (size / maxDim);
+    newPoints.push({ x: px, y: py });
+  }
+  return newPoints;
+}
+
+function translateTo(points, pt) {
+  const c = centroid(points);
+  const newPoints = [];
+  for (let i = 0; i < points.length; i++) {
+    const px = points[i].x + pt.x - c.x;
+    const py = points[i].y + pt.y - c.y;
+    newPoints.push({ x: px, y: py });
+  }
+  return newPoints;
+}
+
+function rotateBy(points, theta) {
+  const c = centroid(points);
+  const cos = Math.cos(theta);
+  const sin = Math.sin(theta);
+  const newPoints = [];
+  for (let i = 0; i < points.length; i++) {
+    const dx = points[i].x - c.x;
+    const dy = points[i].y - c.y;
+    const rx = dx * cos - dy * sin + c.x;
+    const ry = dx * sin + dy * cos + c.y;
+    newPoints.push({ x: rx, y: ry });
+  }
+  return newPoints;
+}
+
+function alignRotation(points) {
+  const c = centroid(points);
+  const p0 = points[0];
+  const theta = Math.atan2(p0.y - c.y, p0.x - c.x);
+  return rotateBy(points, -theta);
+}
+
+function pathDistance(path1, path2) {
+  let d = 0;
+  for (let i = 0; i < path1.length; i++) {
+    d += distance(path1[i], path2[i]);
+  }
+  return d / path1.length;
+}
+
+function generateHexagonTemplate(n) {
+  const vertices = [];
+  for (let i = 0; i <= 6; i++) {
+    const angle = (i * Math.PI / 3);
+    vertices.push({ x: Math.cos(angle), y: Math.sin(angle) });
+  }
+  return resample(vertices, n);
+}
+
+function generateCircleTemplate(n) {
+  const vertices = [];
+  for (let i = 0; i < n; i++) {
+    const angle = (i * Math.PI * 2) / n;
+    vertices.push({ x: Math.cos(angle), y: Math.sin(angle) });
+  }
+  return vertices;
+}
+
+function scoreAgainstTemplate(pts, template) {
+  const N = pts.length;
+  let tempPts = scaleTo(template, 100);
+  tempPts = translateTo(tempPts, { x: 0, y: 0 });
+  
+  let minD = Infinity;
+  for (let shift = 0; shift < N; shift++) {
+    let shifted = [];
+    for (let i = 0; i < N; i++) {
+      shifted.push(tempPts[(i + shift) % N]);
+    }
+    shifted = alignRotation(shifted);
+    
+    const d1 = pathDistance(pts, shifted);
+    if (d1 < minD) minD = d1;
+    
+    let reversed = [...shifted].reverse();
+    reversed = alignRotation(reversed);
+    const d2 = pathDistance(pts, reversed);
+    if (d2 < minD) minD = d2;
+  }
+  return Math.max(0, 1 - minD / 30);
+}
+
+function checkGesture(inputPoints) {
+  if (inputPoints.length < 10) return 0;
+  
+  const N = 64;
+  let pts = resample(inputPoints, N);
+  pts = scaleTo(pts, 100);
+  pts = translateTo(pts, { x: 0, y: 0 });
+  pts = alignRotation(pts);
+  
+  const hexTemplate = generateHexagonTemplate(N);
+  const circleTemplate = generateCircleTemplate(N);
+  
+  const scoreHex = scoreAgainstTemplate(pts, hexTemplate);
+  const scoreCircle = scoreAgainstTemplate(pts, circleTemplate);
+  
+  console.log(`Cell symmetry: ${scoreHex.toFixed(3)}, Curvature: ${scoreCircle.toFixed(3)}`);
+  
+  if (scoreHex > 0.82 && scoreHex > scoreCircle) {
+    showToast("The six-fold boundary is complete. Secret unlocked.", true);
+    return scoreHex;
+  } else if (scoreCircle > 0.85 && scoreCircle > scoreHex) {
+    showToast("A loop of pure curvature... but the colony builds with corners and straight walls.", false);
+  } else {
+    showToast("The trace is lost. Trace the path of the six-fold cells.", false);
+  }
+  return 0;
+}
+
+// ── Event Handlers ──
+function handleAntStart(e) {
+  resizeCanvas();
+  
+  const touch = e.touches ? e.touches[0] : e;
+  startX = touch.clientX;
+  startY = touch.clientY;
+  isDrawing = true;
+  hasMoved = false;
+  drawnPoints = [{ x: startX, y: startY }];
+  pathAlpha = 1;
+  startAnimLoop();
+}
+
+function handleAntMove(e) {
+  if (!isDrawing) return;
+  
+  const touch = e.touches ? e.touches[0] : e;
+  const x = touch.clientX;
+  const y = touch.clientY;
+  
+  if (!hasMoved) {
+    const dx = x - startX;
+    const dy = y - startY;
+    if (Math.sqrt(dx*dx + dy*dy) > 10) {
+      hasMoved = true;
+    }
+  }
+  
+  if (hasMoved) {
+    if (e.cancelable) e.preventDefault();
+    drawnPoints.push({ x, y });
+    createParticle(x, y);
+    startAnimLoop();
+  }
+}
+
+function handleAntEnd(e) {
+  if (!isDrawing) return;
+  isDrawing = false;
+  
+  if (!hasMoved) {
+    handleAntClick();
+  } else {
+    const score = checkGesture(drawnPoints);
+    if (score > 0.82) {
+      unlockTTS();
+      triggerGoldBurst();
+    } else {
+      triggerFailureGlow();
+    }
+  }
+}
+
+// Attach Event Listeners
+const homeBtn = document.getElementById('home-btn');
+homeBtn.addEventListener('mousedown', handleAntStart);
+homeBtn.addEventListener('touchstart', handleAntStart, { passive: false });
+
+window.addEventListener('mousemove', handleAntMove);
+window.addEventListener('touchmove', handleAntMove, { passive: false });
+
+window.addEventListener('mouseup', handleAntEnd);
+window.addEventListener('touchend', handleAntEnd);
 
 function navigate(dir) {
   const next = currentIdx + dir;
@@ -501,10 +932,17 @@ let ttsRate = 1;
 let ttsPitch = 1;
 
 function loadVoices() {
-  ttsVoices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+  ttsVoices = speechSynthesis.getVoices().filter(v => v.lang === 'en-GB' || v.lang === 'en-US');
+  if (!ttsVoices.length) ttsVoices = speechSynthesis.getVoices().filter(v => v.lang === 'en');
   if (!ttsVoices.length) ttsVoices = speechSynthesis.getVoices();
   const sel = document.getElementById('tts-voice');
-  sel.innerHTML = ttsVoices.map((v,i) => `<option value="${i}">${v.name}</option>`).join('');
+  let options = '';
+  if (ttsVoices.length > 0) {
+    options = ttsVoices.map((v,i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('');
+  } else {
+    options = '<option value="-1" disabled>The frequency is silent...</option>';
+  }
+  sel.innerHTML = options;
 }
 if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = loadVoices;
@@ -537,8 +975,8 @@ function getProseSentences() {
 }
 
 function toggleTTS() {
-  if (!('speechSynthesis' in window)) {
-    alert('Text-to-speech is not supported in this browser.');
+  if (!('speechSynthesis' in window) || ttsVoices.length === 0) {
+    showToast("The frequency is silent. The colony's transmission is blocked in this vessel.", false);
     return;
   }
   ttsActive = !ttsActive;
@@ -560,8 +998,8 @@ function buildQueue() {
     const u = new SpeechSynthesisUtterance(span.textContent);
     u.rate = ttsRate;
     u.pitch = ttsPitch;
-    const voiceIdx = document.getElementById('tts-voice').value;
-    if (ttsVoices[voiceIdx]) u.voice = ttsVoices[voiceIdx];
+    const voiceIdx = parseInt(document.getElementById('tts-voice').value, 10);
+    if (voiceIdx >= 0 && ttsVoices[voiceIdx]) u.voice = ttsVoices[voiceIdx];
     u.onstart = () => {
       document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
       span.classList.add('tts-reading');
