@@ -20,7 +20,7 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
 
 /* ── TOPBAR ── */
 #topbar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,8,12,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--ridge);display:flex;align-items:center;gap:0;height:52px;}
-#home-btn{background:none;border:none;border-right:1px solid var(--ridge);padding:0 14px;height:100%;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;white-space:nowrap;transition:background .2s;flex-shrink:0;touch-action:none;}
+#home-btn{background:none;border:none;border-right:1px solid var(--ridge);padding:0 14px;height:100%;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;white-space:nowrap;transition:background .2s;flex-shrink:0;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
 #home-btn:hover{background:var(--surface);}
 #home-btn span{font-size:20px;}
 #home-btn .home-label{display:inline;}
@@ -135,6 +135,9 @@ body{background:var(--void);color:var(--text);font-family:'Crimson Pro',Georgia,
   inset: 0;
   z-index: 9999;
   pointer-events: none;
+  background: rgba(7, 8, 12, 0);
+  box-shadow: inset 0 0 80px rgba(200, 168, 75, 0);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 #gesture-toast {
   position: fixed;
@@ -798,81 +801,135 @@ function checkGesture(inputPoints) {
   
   console.log(`Cell symmetry: ${scoreHex.toFixed(3)}, Curvature: ${scoreCircle.toFixed(3)}`);
   
-  if (scoreHex > 0.82 && scoreHex > scoreCircle) {
-    showToast("The six-fold boundary is complete. Secret unlocked.", true);
+  if (scoreHex > 0.80 && scoreHex > scoreCircle) {
+    const percent = Math.round(scoreHex * 100);
+    showToast(`The six-fold boundary is complete (Symmetry: ${percent}%). Secret unlocked.`, true);
     return scoreHex;
   } else if (scoreCircle > 0.85 && scoreCircle > scoreHex) {
     showToast("A loop of pure curvature... but the colony builds with corners and straight walls.", false);
   } else {
-    showToast("The trace is lost. Trace the path of the six-fold cells.", false);
+    const percent = Math.round(scoreHex * 100);
+    showToast(`The trace is lost. Cell symmetry: ${percent}%.`, false);
   }
   return 0;
 }
 
-// ── Event Handlers ──
+// ── Event Handlers & Scanner ──
+let drawModeTimer = null;
+let isDrawingMode = false;
+let activeStartElement = null;
+
 function handleAntStart(e) {
+  if (e.target.closest('.nav-arr')) return;
+  if (e.cancelable) e.preventDefault();
+  
   resizeCanvas();
   
   const touch = e.touches ? e.touches[0] : e;
   startX = touch.clientX;
   startY = touch.clientY;
+  drawnPoints = [];
+  isDrawing = false;
+  activeStartElement = e.target;
+  
+  clearTimeout(drawModeTimer);
+  drawModeTimer = setTimeout(enterDrawingMode, 500);
+}
+
+function enterDrawingMode() {
+  drawModeTimer = null;
+  isDrawingMode = true;
   isDrawing = true;
-  hasMoved = false;
-  drawnPoints = [{ x: startX, y: startY }];
   pathAlpha = 1;
+  
+  if (navigator.vibrate) navigator.vibrate(40);
+  
+  const cvs = document.getElementById('gesture-canvas');
+  cvs.style.pointerEvents = 'auto';
+  cvs.style.background = 'rgba(7, 8, 12, 0.7)';
+  cvs.style.boxShadow = 'inset 0 0 80px rgba(200, 168, 75, 0.2)';
+  
+  showToast("The hive scanner is active. Trace the geometry...", true);
+  resizeCanvas();
   startAnimLoop();
 }
 
-function handleAntMove(e) {
+function exitDrawingMode() {
+  isDrawingMode = false;
+  isDrawing = false;
+  activeStartElement = null;
+  
+  const cvs = document.getElementById('gesture-canvas');
+  cvs.style.pointerEvents = 'none';
+  cvs.style.background = 'transparent';
+  cvs.style.boxShadow = 'none';
+}
+
+function handleGlobalMove(e) {
+  if (!isDrawingMode) {
+    if (drawModeTimer) {
+      const touch = e.touches ? e.touches[0] : e;
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      if (Math.sqrt(dx*dx + dy*dy) > 15) {
+        clearTimeout(drawModeTimer);
+        drawModeTimer = null;
+      }
+    }
+    return;
+  }
+  
   if (!isDrawing) return;
   
+  if (e.cancelable) e.preventDefault();
   const touch = e.touches ? e.touches[0] : e;
   const x = touch.clientX;
   const y = touch.clientY;
   
-  if (!hasMoved) {
-    const dx = x - startX;
-    const dy = y - startY;
-    if (Math.sqrt(dx*dx + dy*dy) > 10) {
-      hasMoved = true;
-    }
-  }
-  
-  if (hasMoved) {
-    if (e.cancelable) e.preventDefault();
-    drawnPoints.push({ x, y });
-    createParticle(x, y);
-    startAnimLoop();
-  }
+  drawnPoints.push({ x, y });
+  createParticle(x, y);
+  startAnimLoop();
 }
 
-function handleAntEnd(e) {
-  if (!isDrawing) return;
+function handleGlobalEnd(e) {
+  if (drawModeTimer) {
+    clearTimeout(drawModeTimer);
+    drawModeTimer = null;
+    // Only navigate home if we actually tapped the home button or inside it
+    if (activeStartElement && activeStartElement.closest('#home-btn')) {
+      handleAntClick();
+    }
+    activeStartElement = null;
+    return;
+  }
+  
+  if (!isDrawingMode) return;
   isDrawing = false;
   
-  if (!hasMoved) {
-    handleAntClick();
-  } else {
+  if (drawnPoints.length > 5) {
     const score = checkGesture(drawnPoints);
-    if (score > 0.82) {
+    if (score > 0) {
       unlockTTS();
       triggerGoldBurst();
     } else {
       triggerFailureGlow();
     }
   }
+  exitDrawingMode();
 }
 
 // Attach Event Listeners
-const homeBtn = document.getElementById('home-btn');
-homeBtn.addEventListener('mousedown', handleAntStart);
-homeBtn.addEventListener('touchstart', handleAntStart, { passive: false });
+const topBar = document.getElementById('topbar');
+if (topBar) {
+  topBar.addEventListener('mousedown', handleAntStart);
+  topBar.addEventListener('touchstart', handleAntStart, { passive: false });
+}
 
-window.addEventListener('mousemove', handleAntMove);
-window.addEventListener('touchmove', handleAntMove, { passive: false });
+window.addEventListener('mousemove', handleGlobalMove);
+window.addEventListener('touchmove', handleGlobalMove, { passive: false });
 
-window.addEventListener('mouseup', handleAntEnd);
-window.addEventListener('touchend', handleAntEnd);
+window.addEventListener('mouseup', handleGlobalEnd);
+window.addEventListener('touchend', handleGlobalEnd);
 
 function navigate(dir) {
   const next = currentIdx + dir;
