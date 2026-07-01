@@ -783,6 +783,12 @@ function scoreAgainstTemplate(pts, template) {
   }
   return Math.max(0, 1 - minD / 30);
 }
+function getRadialStandardDeviation(points) {
+  const dists = points.map(p => Math.sqrt(p.x * p.x + p.y * p.y));
+  const avg = dists.reduce((sum, d) => sum + d, 0) / dists.length;
+  const variance = dists.reduce((sum, d) => sum + Math.pow(d - avg, 2), 0) / dists.length;
+  return Math.sqrt(variance);
+}
 
 function checkGesture(inputPoints) {
   if (inputPoints.length < 10) return 0;
@@ -798,14 +804,17 @@ function checkGesture(inputPoints) {
   
   const scoreHex = scoreAgainstTemplate(pts, hexTemplate);
   const scoreCircle = scoreAgainstTemplate(pts, circleTemplate);
+  const radialStd = getRadialStandardDeviation(pts);
   
-  console.log(`Cell symmetry: ${scoreHex.toFixed(3)}, Curvature: ${scoreCircle.toFixed(3)}`);
+  console.log(`Cell symmetry: ${scoreHex.toFixed(3)}, Curvature: ${scoreCircle.toFixed(3)}, Radial variation: ${radialStd.toFixed(3)}`);
   
-  if (scoreHex > 0.80 && scoreHex > scoreCircle) {
+  const isCircleLike = scoreCircle > 0.75 && radialStd < 3.0;
+  
+  if (scoreHex > 0.78 && scoreHex > scoreCircle && radialStd >= 3.0) {
     const percent = Math.round(scoreHex * 100);
     showToast(`The six-fold boundary is complete (Symmetry: ${percent}%). Secret unlocked.`, true);
     return scoreHex;
-  } else if (scoreCircle > 0.85 && scoreCircle > scoreHex) {
+  } else if (isCircleLike) {
     showToast("A loop of pure curvature... but the colony builds with corners and straight walls.", false);
   } else {
     const percent = Math.round(scoreHex * 100);
