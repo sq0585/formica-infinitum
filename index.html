@@ -590,67 +590,173 @@
             left: 0;
             right: 0;
             z-index: 190;
-            background: rgba(7, 8, 12, 0.97);
-            backdrop-filter:blur(16px);
+            background: rgba(7,8,12,.98);
+            backdrop-filter: blur(20px);
             border-top: 1px solid var(--ridge);
             display: none;
+            flex-direction: column;
+        }
+        #tts-bar.active { display: flex; }
+
+        /* sentence progress track */
+        #tts-progress-track {
+            width: 100%;
+            height: 2px;
+            background: var(--ridge);
+            flex-shrink: 0;
+        }
+        #tts-progress-fill {
+            height: 100%;
+            background: var(--arc-accent);
+            width: 0%;
+            transition: width .3s linear;
+        }
+
+        /* info row */
+        #tts-info-row {
+            display: flex;
             align-items: center;
+            padding: 8px 16px 4px;
             gap: 10px;
-            padding: 10px 16px;
+            border-bottom: 1px solid rgba(28,31,46,.5);
+        }
+        #tts-ch-meta {
+            flex: 1;
+            min-width: 0;
+        }
+        #tts-ch-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: var(--arc-accent);
+            text-transform: uppercase;
+        }
+        #tts-ch-title {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-bright);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #tts-close-btn {
+            background: none;
+            border: 1px solid var(--ridge);
+            color: var(--text-dim);
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            flex-shrink: 0;
+            transition: all .15s;
+        }
+        #tts-close-btn:hover { border-color: var(--arc-accent); color: var(--arc-accent); }
+
+        /* controls row */
+        #tts-controls-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 14px 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
-        #tts-bar.active {
+
+        /* transport group */
+        .tts-transport {
             display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
         }
         .tts-btn {
             background: var(--deep);
             border: 1px solid var(--ridge);
             color: var(--arc-accent);
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 13px;
             flex-shrink: 0;
-            transition: all 0.15s;
+            transition: all .15s;
         }
-        .tts-btn:hover {
-            border-color: var(--arc-accent);
-        }
+        .tts-btn:hover { border-color: var(--arc-accent); background: var(--surface); }
+        .tts-btn:disabled { opacity: .3; pointer-events: none; }
         .tts-btn.primary {
             width: 42px;
             height: 42px;
             background: var(--arc-dim);
             border-color: var(--arc-accent);
             color: var(--text-bright);
+            font-size: 16px;
         }
-        #tts-label,
-        #tts-label-pitch {
+        .tts-btn.primary:hover { background: var(--arc-accent); color: var(--void); }
+        .tts-btn.ch-nav { font-size: 11px; opacity: .8; }
+        .tts-btn.ch-nav:hover { opacity: 1; }
+
+        /* divider */
+        .tts-vdivider {
+            width: 1px;
+            height: 24px;
+            background: var(--ridge);
+            flex-shrink: 0;
+            margin: 0 2px;
+        }
+
+        /* settings group */
+        .tts-settings {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+            flex-wrap: wrap;
+        }
+        .tts-slider-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+        .tts-slider-label {
             font-family: 'Space Mono', monospace;
-            font-size: 9px;
+            font-size: 7px;
             letter-spacing: 1px;
             color: var(--text-dim);
             text-transform: uppercase;
-            flex-shrink: 0;
+            white-space: nowrap;
         }
-        #tts-rate,
-        #tts-pitch {
-            width: 60px;
+        .tts-slider-val {
+            font-family: 'Space Mono', monospace;
+            font-size: 8px;
+            color: var(--arc-accent);
+            min-width: 26px;
+        }
+        #tts-rate, #tts-pitch {
+            width: 56px;
             accent-color: var(--arc-accent);
+            cursor: pointer;
         }
         #tts-voice {
             background: var(--deep);
             border: 1px solid var(--ridge);
             color: var(--text-dim);
             font-family: 'Space Mono', monospace;
-            font-size: 9px;
-            padding: 6px 8px;
-            max-width: 140px;
+            font-size: 8px;
+            padding: 5px 7px;
+            max-width: 130px;
             flex-shrink: 1;
+            min-width: 80px;
         }
+
+        /* unlock toggle button in chapter header */
         .tts-toggle {
             background: none;
             border: 1px solid var(--ridge);
@@ -666,15 +772,18 @@
             padding: 8px 14px;
             transition: all 0.2s;
         }
-        .tts-toggle.unlocked {
-            display: flex;
-        }
-        .tts-toggle:hover {
-            border-color: var(--arc-accent);
-            background: var(--surface);
-        }
-        .tts-spacer {
-            flex: 1;
+        .tts-toggle-icon { font-size: 15px; line-height: 1; }
+        .tts-toggle.unlocked { display: flex; }
+        .tts-toggle:hover { border-color: var(--arc-accent); background: var(--surface); }
+        /* angle-bracket nav buttons need bigger text to read clearly */
+        .tts-btn.ch-nav { font-size: 16px; font-family: 'Cinzel', serif; }
+
+        /* mobile tweaks */
+        @media (max-width: 480px) {
+            #tts-ch-title { font-size: 11px; }
+            #tts-controls-row { padding: 6px 10px 10px; gap: 6px; }
+            #tts-rate, #tts-pitch { width: 44px; }
+            #tts-voice { max-width: 100px; font-size: 7px; }
         }
 
         /* ── GESTURE OVERLAY ── */
@@ -759,7 +868,7 @@
                 <div class="ch-title-large" id="ch-title-display">—</div>
                 <div class="ch-arc-large" id="ch-arc-display">Arc I · The Night Shift</div>
                 <button class="tts-toggle" id="tts-toggle-btn" onclick="toggleTTS()" style="margin-top:18px">
-                    🔊
+                    <span class="tts-toggle-icon">◈</span>
                     <span id="tts-toggle-label">Listen to this chapter</span>
                 </button>
             </div>
@@ -781,15 +890,42 @@
     <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
     <div id="tts-bar">
-        <button class="tts-btn primary" id="tts-play" onclick="ttsPlayPause()" title="Play/Pause">▶</button>
-        <button class="tts-btn" onclick="ttsStop()" title="Stop">■</button>
-        <span id="tts-label">Speed</span>
-        <input type="range" id="tts-rate" min="0.6" max="2" step="0.1" value="1" oninput="ttsRateChange(this.value)">
-        <span id="tts-label-pitch">Pitch</span>
-        <input type="range" id="tts-pitch" min="0" max="2" step="0.1" value="1" oninput="ttsPitchChange(this.value)">
-        <select id="tts-voice" onchange="ttsVoiceChange()"></select>
-        <div class="tts-spacer"></div>
-        <button class="tts-btn" onclick="closeTTS()" title="Close">✕</button>
+        <!-- Sentence progress track -->
+        <div id="tts-progress-track"><div id="tts-progress-fill"></div></div>
+        <!-- Info row -->
+        <div id="tts-info-row">
+            <div id="tts-ch-meta">
+                <div id="tts-ch-num">Chapter —</div>
+                <div id="tts-ch-title">—</div>
+            </div>
+            <button id="tts-close-btn" onclick="closeTTS()" title="Close player">×</button>
+        </div>
+        <!-- Controls row -->
+        <div id="tts-controls-row">
+            <!-- Transport -->
+            <div class="tts-transport">
+                <button class="tts-btn ch-nav" id="tts-prev-ch" onclick="ttsNavigateChapter(-1)" title="Previous chapter">«</button>
+                <button class="tts-btn" onclick="ttsSkipSentence(-1)" title="Previous sentence">‹</button>
+                <button class="tts-btn primary" id="tts-play" onclick="ttsPlayPause()" title="Play / Pause">▶</button>
+                <button class="tts-btn" onclick="ttsStop()" title="Stop">×</button>
+                <button class="tts-btn" onclick="ttsSkipSentence(1)" title="Next sentence">›</button>
+                <button class="tts-btn ch-nav" id="tts-next-ch" onclick="ttsNavigateChapter(1)" title="Next chapter">»</button>
+            </div>
+            <div class="tts-vdivider"></div>
+            <!-- Settings -->
+            <div class="tts-settings">
+                <div class="tts-slider-group">
+                    <span class="tts-slider-label">Speed</span>
+                    <input type="range" id="tts-rate" min="0.6" max="2" step="0.1" value="1" oninput="ttsRateChange(this.value)">
+                    <span class="tts-slider-val" id="tts-rate-val">×1.0</span>
+                </div>
+                <div class="tts-slider-group">
+                    <span class="tts-slider-label">Pitch</span>
+                    <input type="range" id="tts-pitch" min="0" max="2" step="0.1" value="1" oninput="ttsPitchChange(this.value)">
+                </div>
+                <select id="tts-voice" onchange="ttsVoiceChange()"></select>
+            </div>
+        </div>
     </div>
 
     <canvas id="gesture-canvas"></canvas>
@@ -1160,6 +1296,7 @@ function renderList() {
                 document.documentElement.style.setProperty('--arc-dim', c.dim);
 
                 updateArrows();
+                updateTtsBarInfo();
 
                 document.getElementById('prose-body').innerHTML = '<div class="state-msg"><span class="icon">⟳</span>Loading chapter...</div>';
 
@@ -1815,6 +1952,49 @@ function loadVoices() {
                 return Array.from(body.querySelectorAll('.tts-sentence')).filter(s => s.textContent.trim());
             }
 
+            // ── Update TTS bar chapter info ──
+            function updateTtsBarInfo() {
+                if (currentIdx < 0) return;
+                const ch = chapters[currentIdx];
+                const num = String(currentIdx + 1).padStart(2, '0');
+                document.getElementById('tts-ch-num').textContent = `Chapter ${num}`;
+                document.getElementById('tts-ch-title').textContent = ch.title;
+                // update prev/next chapter button states
+                const prevBtn = document.getElementById('tts-prev-ch');
+                const nextBtn = document.getElementById('tts-next-ch');
+                if (prevBtn) prevBtn.disabled = currentIdx <= 0;
+                if (nextBtn) nextBtn.disabled = currentIdx >= chapters.length - 1;
+            }
+
+            // ── Navigate to a different chapter while keeping TTS alive ──
+            function ttsNavigateChapter(dir) {
+                const next = currentIdx + dir;
+                if (next < 0 || next >= chapters.length) return;
+                const wasPlaying = speechSynthesis.speaking && !speechSynthesis.paused;
+                ttsStop();
+                loadChapter(next).then(() => {
+                    if (wasPlaying) {
+                        // small delay so the prose renders before we build the queue
+                        setTimeout(() => {
+                            ttsActive = true;
+                            document.getElementById('tts-bar').classList.add('active');
+                            buildQueue();
+                            speechSynthesis.speak(ttsUtterances[0]);
+                            document.getElementById('tts-play').textContent = '⏸';
+                        }, 300);
+                    }
+                });
+            }
+
+            // ── Update sentence progress bar ──
+            function updateTtsProgress() {
+                const fill = document.getElementById('tts-progress-fill');
+                if (!fill) return;
+                const total = ttsUtterances.length;
+                const pct = total > 0 ? (ttsIdx / total) * 100 : 0;
+                fill.style.width = pct + '%';
+            }
+
             function toggleTTS() {
                 if (!('speechSynthesis' in window) || ttsVoices.length === 0) {
                     showToast("The frequency is silent. The colony's transmission is blocked in this vessel.", false);
@@ -1823,10 +2003,11 @@ function loadVoices() {
                 ttsActive = !ttsActive;
                 document.getElementById('tts-bar').classList.toggle('active', ttsActive);
                 document.getElementById('tts-toggle-label').textContent = ttsActive ? 'Hide listen player' : 'Listen to this chapter';
-                if (!ttsActive) 
+                if (ttsActive) {
+                    updateTtsBarInfo();
+                } else {
                     ttsStop();
-                
-
+                }
             }
 
             function closeTTS() {
@@ -1843,18 +2024,16 @@ function loadVoices() {
                     u.rate = ttsRate;
                     u.pitch = ttsPitch;
                     const voiceIdx = parseInt(document.getElementById('tts-voice').value, 10);
-                    if (voiceIdx >= 0 && ttsVoices[voiceIdx]) 
-                        u.voice = ttsVoices[voiceIdx];
-                    
-
+                    if (voiceIdx >= 0 && ttsVoices[voiceIdx]) u.voice = ttsVoices[voiceIdx];
                     u.onstart = () => {
                         document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
                         span.classList.add('tts-reading');
-                        span.scrollIntoView({block: 'center', behavior: 'smooth'});
+                        span.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                        updateTtsProgress();
                     };
                     u.onend = () => {
                         if (ttsActive && !ttsPaused && i === ttsIdx) {
-                            ttsIdx ++;
+                            ttsIdx++;
                             if (ttsIdx < ttsUtterances.length) {
                                 speechSynthesis.speak(ttsUtterances[ttsIdx]);
                             } else {
@@ -1864,11 +2043,13 @@ function loadVoices() {
                     };
                     return u;
                 });
+                updateTtsProgress();
             }
 
             function ttsFinished() {
                 document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
                 document.getElementById('tts-play').textContent = '▶';
+                document.getElementById('tts-progress-fill').style.width = '100%';
                 ttsIdx = 0;
             }
 
@@ -1886,33 +2067,45 @@ function loadVoices() {
                     btn.textContent = '⏸';
                     return;
                 }
-                if (!ttsUtterances.length) 
-                    buildQueue();
-                
-
+                if (!ttsUtterances.length) buildQueue();
                 ttsPaused = false;
                 btn.textContent = '⏸';
                 speechSynthesis.speak(ttsUtterances[ttsIdx]);
             }
 
-            function ttsStop() {
-                if ('speechSynthesis' in window) 
-                    speechSynthesis.cancel();
-                
+            // Skip forward or back by one sentence
+            function ttsSkipSentence(dir) {
+                if (!ttsUtterances.length) buildQueue();
+                const target = ttsIdx + dir;
+                if (target < 0 || target >= ttsUtterances.length) return;
+                const wasPlaying = speechSynthesis.speaking && !speechSynthesis.paused;
+                speechSynthesis.cancel();
+                ttsIdx = target;
+                ttsPaused = false;
+                updateTtsProgress();
+                if (wasPlaying || dir > 0) {
+                    // resume playing from the new position
+                    document.getElementById('tts-play').textContent = '⏸';
+                    speechSynthesis.speak(ttsUtterances[ttsIdx]);
+                }
+            }
 
+            function ttsStop() {
+                if ('speechSynthesis' in window) speechSynthesis.cancel();
                 ttsUtterances = [];
                 ttsIdx = 0;
                 ttsPaused = false;
                 const btn = document.getElementById('tts-play');
-                if (btn) 
-                    btn.textContent = '▶';
-                
-
+                if (btn) btn.textContent = '▶';
+                const fill = document.getElementById('tts-progress-fill');
+                if (fill) fill.style.width = '0%';
                 document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
             }
 
             function ttsRateChange(val) {
                 ttsRate = parseFloat(val);
+                const v = document.getElementById('tts-rate-val');
+                if (v) v.textContent = '×' + parseFloat(val).toFixed(1);
                 if (speechSynthesis.speaking) {
                     const wasIdx = ttsIdx;
                     speechSynthesis.cancel();
@@ -1939,10 +2132,7 @@ function loadVoices() {
                     speechSynthesis.cancel();
                     buildQueue();
                     ttsIdx = wasIdx;
-                    if (!ttsPaused) 
-                        speechSynthesis.speak(ttsUtterances[ttsIdx]);
-                    
-
+                    if (!ttsPaused) speechSynthesis.speak(ttsUtterances[ttsIdx]);
                 }
             }
 
