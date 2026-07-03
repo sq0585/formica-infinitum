@@ -19,8 +19,51 @@ The story begins small: a warm phone, a notebook, a depth beneath the floor that
 
 **Genre:** Cultivation fantasy · Urban mystery · Hard science fiction  
 **Setting:** Chengdu, China — and what lies beneath it  
-**Status:** Ongoing
+**Status:** Complete — 542 chapters across 7 arcs  
 
 ---
 
-_New chapters released ~~weekly~~ TBC._
+## Story Arcs
+
+| Arc | Title | Chapters |
+|-----|-------|----------|
+| I | The Night Shift | Ch. 1–80 |
+| II | The City Below | Ch. 81–200 |
+| III | The Courts and the Codex | Ch. 201–285 |
+| IV | The Architect's Work | Ch. 286–364 |
+| V | Earth is a Colony | Ch. 365–430 |
+| VI | Between Stars | Ch. 431–500 |
+| VII | Formless | Ch. 501–542 |
+
+Each arc shifts genre while following the same protagonist, rules, and deepening consequences. The story earns every escalation.
+
+---
+
+## Reading
+
+Chapters are released daily. New chapters unlock automatically — no account required.
+
+The reading experience includes:
+- Arc-based navigation with per-arc colour theming
+- Reading progress saved locally in your browser
+- Countdown timer to the next chapter release
+- Mobile-friendly layout
+
+**[Read online →](https://sq0585.github.io/formica-infinitum/)**
+
+---
+
+## Repository Structure
+
+```
+formica-infinitum/
+├── index.html        # Reader interface
+├── chapters.json     # Chapter index and metadata
+├── chapters/         # Chapter files (Markdown)
+│   └── ch001.md … ch542.md
+└── assets/           # Cover image, favicon
+```
+
+---
+
+*Built as a static GitHub Pages site — no backend, no frameworks, no dependencies.*
