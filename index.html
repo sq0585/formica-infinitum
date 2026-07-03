@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Formica Infinitum</title>
-        <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-        <style>:root
-        {
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formica Infinitum</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
             --void: #07080c;
             --deep: #0d0f17;
             --surface: #131620;
@@ -23,14 +26,17 @@
             --arc-accent: #c8a84b;
             --arc-dim: #6a5518;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         html {
             scroll-behavior: smooth;
         }
+
         body {
             background: var(--void);
             color: var(--text);
@@ -48,13 +54,14 @@
             right: 0;
             z-index: 200;
             background: rgba(7, 8, 12, 0.97);
-            backdrop-filter:blur(16px);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--ridge);
             display: flex;
             align-items: center;
             gap: 0;
             height: 52px;
         }
+
         #home-btn {
             background: none;
             border: none;
@@ -78,15 +85,19 @@
             -webkit-user-select: none;
             user-select: none;
         }
+
         #home-btn:hover {
             background: var(--surface);
         }
+
         #home-btn span {
             font-size: 20px;
         }
+
         #home-btn .home-label {
             display: inline;
         }
+
         #breadcrumb {
             padding: 0 10px;
             font-family: 'Space Mono', monospace;
@@ -100,11 +111,13 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         #nav-arrows {
             display: flex;
             border-left: 1px solid var(--ridge);
             flex-shrink: 0;
         }
+
         .nav-arr {
             background: none;
             border: none;
@@ -120,28 +133,35 @@
             justify-content: center;
             flex-shrink: 0;
         }
+
         .nav-arr:last-child {
             border-right: none;
         }
+
         .nav-arr:hover {
             color: var(--gold);
             background: var(--surface);
         }
+
         .nav-arr.disabled {
             opacity: .25;
             pointer-events: none;
         }
+
         @media(max-width:480px) {
             #home-btn .home-label {
                 display: none;
             }
+
             #home-btn {
                 padding: 0 10px;
             }
+
             #breadcrumb {
                 font-size: 8px;
                 padding: 0 8px;
             }
+
             .nav-arr {
                 width: 36px;
             }
@@ -152,12 +172,16 @@
         #view-chapter {
             padding-top: 52px;
         }
+
         #view-chapter {
             display: none;
         }
+
         #view-home.arc-nav-open {
             padding-top: 52px;
-        } /* arc-nav is sticky inside the flow */
+        }
+
+        /* arc-nav is sticky inside the flow */
 
         /* ── HERO ── */
         .hero {
@@ -166,6 +190,7 @@
             text-align: center;
             padding: 0;
         }
+
         .hero-cover {
             display: block;
             width: 100%;
@@ -173,21 +198,24 @@
             object-fit: cover;
             object-position: center 30%;
         }
+
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom,rgba(7,8,12,0.15) 0%,rgba(7,8,12,0.5) 55%,rgba(7,8,12,1) 100%);
+            background: linear-gradient(to bottom, rgba(7, 8, 12, 0.15) 0%, rgba(7, 8, 12, 0.5) 55%, rgba(7, 8, 12, 1) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
             padding-bottom: 48px;
         }
+
         .ant-icon {
             font-size: 56px;
             display: block;
             margin-bottom: 14px;
         }
+
         .hero h1 {
             font-family: 'Cinzel', serif;
             font-size: clamp(26px, 5vw, 54px);
@@ -196,6 +224,7 @@
             letter-spacing: 4px;
             text-shadow: 0 2px 24px rgba(0, 0, 0, 0.8);
         }
+
         .hero-sub {
             font-family: 'Space Mono', monospace;
             font-size: 9px;
@@ -205,6 +234,7 @@
             margin: 8px 0 14px;
             text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
         }
+
         .hero-desc {
             max-width: 520px;
             margin: 0 auto;
@@ -220,7 +250,7 @@
             top: 52px;
             z-index: 100;
             background: rgba(7, 8, 12, 0.97);
-            backdrop-filter:blur(12px);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--ridge);
             display: none;
             align-items: center;
@@ -230,9 +260,11 @@
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
+
         #arc-nav::-webkit-scrollbar {
             display: none;
         }
+
         .arc-pill {
             background: none;
             border: 1px solid var(--ridge);
@@ -247,10 +279,12 @@
             transition: all 0.2s;
             flex-shrink: 0;
         }
+
         .arc-pill:hover {
             border-color: var(--pill-accent, var(--gold));
             color: var(--pill-accent, var(--gold));
         }
+
         .arc-pill.active {
             border-color: var(--pill-accent, var(--gold));
             color: var(--pill-accent, var(--gold));
@@ -263,6 +297,7 @@
             margin: 0 auto;
             padding: 40px 20px 80px;
         }
+
         .arc-label {
             font-family: 'Space Mono', monospace;
             font-size: 8px;
@@ -273,11 +308,13 @@
             align-items: center;
             gap: 12px;
         }
+
         .arc-rule {
             flex: 1;
             height: 1px;
             display: block;
         }
+
         .ch-row {
             display: flex;
             align-items: stretch;
@@ -285,15 +322,19 @@
             cursor: pointer;
             transition: transform 0.15s;
         }
+
         .ch-row:hover {
             transform: translateX(4px);
         }
+
         .ch-row:hover .ch-num {
             background: var(--arc-dim);
         }
+
         .ch-row:hover .ch-body-row {
             background: var(--surface);
         }
+
         .ch-num {
             background: var(--deep);
             border-left: 3px solid var(--arc-accent);
@@ -309,18 +350,21 @@
             padding: 4px 6px;
             transition: background 0.15s;
         }
+
         .ch-body-row {
             background: var(--deep);
             flex: 1;
             padding: 14px 18px;
             transition: background 0.15s;
         }
+
         .ch-title-row {
             font-family: 'Cinzel', serif;
             font-size: 14px;
             font-weight: 700;
             color: var(--text-bright);
         }
+
         .ch-arc-tag {
             font-family: 'Space Mono', monospace;
             font-size: 8px;
@@ -329,6 +373,7 @@
             text-transform: uppercase;
             margin-top: 3px;
         }
+
         .ch-arrow {
             display: flex;
             align-items: center;
@@ -338,6 +383,7 @@
             font-size: 13px;
             transition: background 0.15s;
         }
+
         .ch-row:hover .ch-arrow {
             color: var(--arc-accent);
             background: var(--surface);
@@ -349,11 +395,13 @@
             margin: 0 auto;
             padding: 56px 24px 100px;
         }
+
         .ch-header {
             margin-bottom: 48px;
             padding-bottom: 28px;
             border-bottom: 1px solid var(--ridge);
         }
+
         .ch-num-large {
             font-family: 'Space Mono', monospace;
             font-size: 9px;
@@ -362,6 +410,7 @@
             margin-bottom: 10px;
             color: var(--arc-accent);
         }
+
         .ch-title-large {
             font-family: 'Cinzel', serif;
             font-size: clamp(20px, 3vw, 32px);
@@ -370,6 +419,7 @@
             line-height: 1.25;
             margin-bottom: 6px;
         }
+
         .ch-arc-large {
             font-family: 'Space Mono', monospace;
             font-size: 8px;
@@ -384,9 +434,11 @@
             font-size: 1.05em;
             line-height: 2;
         }
+
         #prose-body p {
             margin-bottom: 1.4em;
         }
+
         #prose-body h1,
         #prose-body h2,
         #prose-body h3 {
@@ -395,32 +447,39 @@
             margin: 2em 0 0.6em;
             line-height: 1.3;
         }
+
         #prose-body h1 {
             font-size: 1.4em;
         }
+
         #prose-body h2 {
             font-size: 1.2em;
             color: var(--arc-accent);
         }
+
         #prose-body h3 {
             font-size: 1em;
             letter-spacing: 1px;
             text-transform: uppercase;
             color: var(--gold-pale);
         }
+
         #prose-body em {
             color: var(--text-bright);
             font-style: italic;
         }
+
         #prose-body strong {
             color: var(--gold-pale);
             font-weight: 600;
         }
+
         #prose-body hr {
             border: none;
             border-top: 1px solid var(--ridge);
             margin: 2.5em 0;
         }
+
         #prose-body blockquote {
             border-left: 3px solid var(--arc-dim);
             padding: 16px 20px;
@@ -429,13 +488,16 @@
             font-style: italic;
             color: var(--text-dim);
         }
+
         #prose-body blockquote p {
             margin-bottom: 0.9em;
             line-height: 1.85;
         }
+
         #prose-body blockquote p:last-child {
             margin-bottom: 0;
         }
+
         .tts-sentence.tts-reading {
             background: rgba(200, 168, 75, 0.16);
             border-radius: 2px;
@@ -450,6 +512,7 @@
             border-top: 1px solid var(--ridge);
             padding-top: 24px;
         }
+
         .bnav-btn {
             flex: 1;
             background: var(--deep);
@@ -464,17 +527,37 @@
             transition: all 0.2s;
             text-align: left;
         }
+
         .bnav-btn:hover {
             background: var(--surface);
             color: var(--arc-accent);
         }
+
         .bnav-btn.right {
             text-align: right;
         }
+
         .bnav-btn.hidden {
             visibility: hidden;
             pointer-events: none;
         }
+
+        .bnav-btn.countdown-mode {
+            cursor: default;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .bnav-countdown {
+            display: block;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+
         .bnav-label {
             font-family: 'Cinzel', serif;
             font-size: 13px;
@@ -492,30 +575,35 @@
             max-width: 760px;
             padding: 0 20px;
         }
+
         #continue-btn {
             width: 100%;
             background: var(--deep);
             border: none;
-            border-left: 3px solid var(--gold);
+            border-left: 3px solid var(--cb-accent, var(--gold));
             padding: 14px 18px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            transition: background 0.2s;
+            transition: background 0.2s, border-left-color 0.4s;
             margin-bottom: 2px;
         }
+
         #continue-btn:hover {
             background: var(--surface);
         }
+
         #continue-label {
             font-family: 'Space Mono', monospace;
             font-size: 8px;
             letter-spacing: 3px;
-            color: var(--gold);
+            color: var(--cb-accent, var(--gold));
             text-transform: uppercase;
+            transition: color 0.4s;
         }
+
         #continue-title {
             font-family: 'Cinzel', serif;
             font-size: 14px;
@@ -523,10 +611,12 @@
             margin-top: 3px;
             text-align: left;
         }
+
         #continue-arrow {
-            color: var(--gold);
+            color: var(--cb-accent, var(--gold));
             font-size: 18px;
             flex-shrink: 0;
+            transition: color 0.4s;
         }
 
         /* ── LOADING / ERROR ── */
@@ -539,6 +629,7 @@
             color: var(--text-dim);
             text-transform: uppercase;
         }
+
         .state-msg .icon {
             font-size: 36px;
             display: block;
@@ -575,10 +666,12 @@
             transition: all 0.2s;
             z-index: 150;
         }
+
         #scroll-top:hover {
             border-color: var(--gold);
             color: var(--gold);
         }
+
         #scroll-top.show {
             display: flex;
         }
@@ -590,13 +683,16 @@
             left: 0;
             right: 0;
             z-index: 190;
-            background: rgba(7,8,12,.98);
+            background: rgba(7, 8, 12, 0.98);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--ridge);
             display: none;
             flex-direction: column;
         }
-        #tts-bar.active { display: flex; }
+
+        #tts-bar.active {
+            display: flex;
+        }
 
         /* sentence progress track */
         #tts-progress-track {
@@ -605,11 +701,12 @@
             background: var(--ridge);
             flex-shrink: 0;
         }
+
         #tts-progress-fill {
             height: 100%;
             background: var(--arc-accent);
-            width: 0%;
-            transition: width .3s linear;
+            width: 0;
+            transition: width 0.3s linear;
         }
 
         /* info row */
@@ -618,12 +715,14 @@
             align-items: center;
             padding: 8px 16px 4px;
             gap: 10px;
-            border-bottom: 1px solid rgba(28,31,46,.5);
+            border-bottom: 1px solid rgba(28, 31, 46, 0.5);
         }
+
         #tts-ch-meta {
             flex: 1;
             min-width: 0;
         }
+
         #tts-ch-num {
             font-family: 'Space Mono', monospace;
             font-size: 8px;
@@ -631,6 +730,7 @@
             color: var(--arc-accent);
             text-transform: uppercase;
         }
+
         #tts-ch-title {
             font-family: 'Cinzel', serif;
             font-size: 12px;
@@ -640,6 +740,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         #tts-close-btn {
             background: none;
             border: 1px solid var(--ridge);
@@ -652,9 +753,13 @@
             justify-content: center;
             font-size: 11px;
             flex-shrink: 0;
-            transition: all .15s;
+            transition: all 0.15s;
         }
-        #tts-close-btn:hover { border-color: var(--arc-accent); color: var(--arc-accent); }
+
+        #tts-close-btn:hover {
+            border-color: var(--arc-accent);
+            color: var(--arc-accent);
+        }
 
         /* controls row */
         #tts-controls-row {
@@ -672,6 +777,7 @@
             gap: 4px;
             flex-shrink: 0;
         }
+
         .tts-btn {
             background: var(--deep);
             border: 1px solid var(--ridge);
@@ -685,10 +791,19 @@
             justify-content: center;
             font-size: 13px;
             flex-shrink: 0;
-            transition: all .15s;
+            transition: all 0.15s;
         }
-        .tts-btn:hover { border-color: var(--arc-accent); background: var(--surface); }
-        .tts-btn:disabled { opacity: .3; pointer-events: none; }
+
+        .tts-btn:hover {
+            border-color: var(--arc-accent);
+            background: var(--surface);
+        }
+
+        .tts-btn:disabled {
+            opacity: .3;
+            pointer-events: none;
+        }
+
         .tts-btn.primary {
             width: 42px;
             height: 42px;
@@ -697,9 +812,20 @@
             color: var(--text-bright);
             font-size: 16px;
         }
-        .tts-btn.primary:hover { background: var(--arc-accent); color: var(--void); }
-        .tts-btn.ch-nav { font-size: 11px; opacity: .8; }
-        .tts-btn.ch-nav:hover { opacity: 1; }
+
+        .tts-btn.primary:hover {
+            background: var(--arc-accent);
+            color: var(--void);
+        }
+
+        .tts-btn.ch-nav {
+            font-size: 11px;
+            opacity: .8;
+        }
+
+        .tts-btn.ch-nav:hover {
+            opacity: 1;
+        }
 
         /* divider */
         .tts-vdivider {
@@ -719,12 +845,14 @@
             min-width: 0;
             flex-wrap: wrap;
         }
+
         .tts-slider-group {
             display: flex;
             align-items: center;
             gap: 5px;
             flex-shrink: 0;
         }
+
         .tts-slider-label {
             font-family: 'Space Mono', monospace;
             font-size: 7px;
@@ -733,17 +861,21 @@
             text-transform: uppercase;
             white-space: nowrap;
         }
+
         .tts-slider-val {
             font-family: 'Space Mono', monospace;
             font-size: 8px;
             color: var(--arc-accent);
             min-width: 26px;
         }
-        #tts-rate, #tts-pitch {
+
+        #tts-rate,
+        #tts-pitch {
             width: 56px;
             accent-color: var(--arc-accent);
             cursor: pointer;
         }
+
         #tts-voice {
             background: var(--deep);
             border: 1px solid var(--ridge);
@@ -772,18 +904,47 @@
             padding: 8px 14px;
             transition: all 0.2s;
         }
-        .tts-toggle-icon { font-size: 15px; line-height: 1; }
-        .tts-toggle.unlocked { display: flex; }
-        .tts-toggle:hover { border-color: var(--arc-accent); background: var(--surface); }
+
+        .tts-toggle-icon {
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        .tts-toggle.unlocked {
+            display: flex;
+        }
+
+        .tts-toggle:hover {
+            border-color: var(--arc-accent);
+            background: var(--surface);
+        }
+
         /* angle-bracket nav buttons need bigger text to read clearly */
-        .tts-btn.ch-nav { font-size: 16px; font-family: 'Cinzel', serif; }
+        .tts-btn.ch-nav {
+            font-size: 16px;
+            font-family: 'Cinzel', serif;
+        }
 
         /* mobile tweaks */
-        @media (max-width: 480px) {
-            #tts-ch-title { font-size: 11px; }
-            #tts-controls-row { padding: 6px 10px 10px; gap: 6px; }
-            #tts-rate, #tts-pitch { width: 44px; }
-            #tts-voice { max-width: 100px; font-size: 7px; }
+        @media(max-width: 480px) {
+            #tts-ch-title {
+                font-size: 11px;
+            }
+
+            #tts-controls-row {
+                padding: 6px 10px 10px;
+                gap: 6px;
+            }
+
+            #tts-rate,
+            #tts-pitch {
+                width: 44px;
+            }
+
+            #tts-voice {
+                max-width: 100px;
+                font-size: 7px;
+            }
         }
 
         /* ── GESTURE OVERLAY ── */
@@ -796,6 +957,7 @@
             box-shadow: inset 0 0 80px rgba(200, 168, 75, 0);
             transition: background 0.4s ease, box-shadow 0.4s ease;
         }
+
         #gesture-toast {
             position: fixed;
             bottom: 80px;
@@ -814,12 +976,68 @@
             pointer-events: none;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        /* ── RELEASE COUNTDOWN TIMER ── */
+        #release-timer-wrap {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 20px 64px;
+            display: none;
+        }
+
+        #release-timer {
+            border: 1px solid var(--ridge);
+            border-left: 3px solid var(--gold-dim);
+            background: var(--deep);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .rt-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .rt-info {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            color: var(--text);
+            margin-top: 5px;
+        }
+
+        #release-countdown {
+            font-family: 'Space Mono', monospace;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .rt-sub {
+            font-family: 'Space Mono', monospace;
+            font-size: 7px;
+            color: var(--text-dim);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 4px;
+            text-align: right;
+        }
     </style>
 </head>
+
 <body>
 
     <div id="topbar">
-        <button id="home-btn" title="Formica Infinitum (Home) · Trace the sacred geometry of the hive to unlock the voice...">
+        <button id="home-btn"
+            title="Formica Infinitum (Home) · Trace the sacred geometry of the hive to unlock the voice...">
             <span>🐜</span>
             <span class="home-label">FORMICA INFINITUM</span>
         </button>
@@ -839,7 +1057,8 @@
     <div id="view-home">
         <div class="hero">
             <div class="hex-bg"></div>
-            <img src="assets/cover.png" alt="Formica Infinitum Cover" class="hero-cover" onerror="this.style.display='none'">
+            <img src="assets/cover.png" alt="Formica Infinitum Cover" class="hero-cover"
+                onerror="this.style.display='none'">
             <div class="hero-overlay">
                 <div class="hero-sub">The Eternal Ant Legacy</div>
                 <h1>FORMICA INFINITUM</h1>
@@ -856,7 +1075,20 @@
         </div>
         <div class="list-wrap" id="chapter-list">
             <div class="state-msg">
-                <span class="icon">⟳</span>Loading chapters...</div>
+                <span class="icon">⟳</span>Loading chapters...
+            </div>
+        </div>
+        <div id="release-timer-wrap">
+            <div id="release-timer">
+                <div>
+                    <div class="rt-label">Next Release</div>
+                    <div class="rt-info" id="release-timer-info">2 new chapters unlock in</div>
+                </div>
+                <div>
+                    <div id="release-countdown">—</div>
+                    <div class="rt-sub">HH &middot; MM &middot; SS</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -874,14 +1106,15 @@
             </div>
             <div id="prose-body">
                 <div class="state-msg">
-                    <span class="icon">⟳</span>Loading...</div>
+                    <span class="icon">⟳</span>Loading...
+                </div>
             </div>
             <div class="bottom-nav">
                 <button class="bnav-btn" id="bnav-prev" onclick="navigate(-1)">
                     ← Previous<span class="bnav-label" id="bnav-prev-title"></span>
                 </button>
                 <button class="bnav-btn right" id="bnav-next" onclick="navigate(1)">
-                    Next →<span class="bnav-label" id="bnav-next-title"></span>
+                    Next →<span class="bnav-label" id="bnav-next-title"></span><span class="bnav-countdown" id="bnav-next-countdown" style="display:none"></span>
                 </button>
             </div>
         </div>
@@ -891,7 +1124,9 @@
 
     <div id="tts-bar">
         <!-- Sentence progress track -->
-        <div id="tts-progress-track"><div id="tts-progress-fill"></div></div>
+        <div id="tts-progress-track">
+            <div id="tts-progress-fill"></div>
+        </div>
         <!-- Info row -->
         <div id="tts-info-row">
             <div id="tts-ch-meta">
@@ -904,24 +1139,28 @@
         <div id="tts-controls-row">
             <!-- Transport -->
             <div class="tts-transport">
-                <button class="tts-btn ch-nav" id="tts-prev-ch" onclick="ttsNavigateChapter(-1)" title="Previous chapter">«</button>
+                <button class="tts-btn ch-nav" id="tts-prev-ch" onclick="ttsNavigateChapter(-1)"
+                    title="Previous chapter">«</button>
                 <button class="tts-btn" onclick="ttsSkipSentence(-1)" title="Previous sentence">‹</button>
                 <button class="tts-btn primary" id="tts-play" onclick="ttsPlayPause()" title="Play / Pause">▶</button>
                 <button class="tts-btn" onclick="ttsStop()" title="Stop">×</button>
                 <button class="tts-btn" onclick="ttsSkipSentence(1)" title="Next sentence">›</button>
-                <button class="tts-btn ch-nav" id="tts-next-ch" onclick="ttsNavigateChapter(1)" title="Next chapter">»</button>
+                <button class="tts-btn ch-nav" id="tts-next-ch" onclick="ttsNavigateChapter(1)"
+                    title="Next chapter">»</button>
             </div>
             <div class="tts-vdivider"></div>
             <!-- Settings -->
             <div class="tts-settings">
                 <div class="tts-slider-group">
                     <span class="tts-slider-label">Speed</span>
-                    <input type="range" id="tts-rate" min="0.6" max="2" step="0.1" value="1" oninput="ttsRateChange(this.value)">
+                    <input type="range" id="tts-rate" min="0.6" max="2" step="0.1" value="1"
+                        oninput="ttsRateChange(this.value)">
                     <span class="tts-slider-val" id="tts-rate-val">×1.0</span>
                 </div>
                 <div class="tts-slider-group">
                     <span class="tts-slider-label">Pitch</span>
-                    <input type="range" id="tts-pitch" min="0" max="2" step="0.1" value="1" oninput="ttsPitchChange(this.value)">
+                    <input type="range" id="tts-pitch" min="0" max="2" step="0.1" value="1"
+                        oninput="ttsPitchChange(this.value)">
                 </div>
                 <select id="tts-voice" onchange="ttsVoiceChange()"></select>
             </div>
@@ -978,7 +1217,10 @@
         }
 
         let chapters = [],
+            allChapters = [],
             currentIdx = -1;
+
+        let releaseTimerInterval = null;
 
         // ── Simple Markdown renderer ──
         function parseMd(md) {
@@ -994,15 +1236,16 @@
                 }
             };
             const openP = () => {
-                if (! inP) {
+                if (!inP) {
                     html += '<p>';
                     inP = true;
                 }
             };
             const flushBq = () => {
-                if (! bqLines.length) 
+                if (!bqLines.length)
                     return;
-                
+
+
 
                 let content = '<p>';
                 for (let j = 0; j < bqLines.length; j++) {
@@ -1033,9 +1276,8 @@
                 if (hl) {
                     closeP();
                     const t = hl[1].length;
-                    html += `<h${t}>${
-                        inline(hl[2])
-                    }</h${t}>\n`;
+                    html += `<h${t}>${inline(hl[2])
+                        }</h${t}>\n`;
                     continue;
                 }
                 if (/^---+$/.test(l.trim())) {
@@ -1091,11 +1333,12 @@
         const STORAGE_KEY = 'formica_last';
 
         function saveProgress() {
-            if (currentIdx < 0) 
+            if (currentIdx < 0)
                 return;
-            
 
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({idx: currentIdx, scroll: window.scrollY}));
+
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ idx: currentIdx, scroll: window.scrollY }));
             location.hash = chapters[currentIdx].id;
         }
 
@@ -1110,1034 +1353,1181 @@
             }
             try {
                 const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-                if (saved && saved.idx >= 0 && saved.idx<chapters.length) {
-      const ch = chapters[saved.idx];
-      const num = String(saved.idx+1).padStart(2, '0');
-      document.getElementById('continue-title').textContent = `Ch.${num} — ${ch.title}`;
-      document.getElementById('continue-bar').style.display = 'block';
-      window._resumeScroll = saved.scroll || 0;
-    }
-  } catch(e) {}
-}
+                if (saved && saved.idx >= 0 && saved.idx < chapters.length) {
+                    const ch = chapters[saved.idx];
+                    const num = String(saved.idx + 1).padStart(2, '0');
+                    document.getElementById('continue-title').textContent = `Ch.${num} — ${ch.title}`;
+                    // Tint the bar with the arc's accent colour
+                    const cbColor = arcColor(ch.arc);
+                    document.getElementById('continue-btn').style.setProperty('--cb-accent', cbColor.accent);
+                    document.getElementById('continue-bar').style.display = 'block';
+                    window._resumeScroll = saved.scroll || 0;
+                }
+            } catch (e) { }
+        }
 
-function resumeReading() {
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-  if (!saved) return;
-  loadChapter(saved.idx, saved.scroll);
-}
+        function resumeReading() {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (!saved) return;
+            loadChapter(saved.idx, saved.scroll);
+        }
 
-// ── Fetch chapters index ──
-async function init() {
-  try {
-    const r = await fetch(`${RAW}/chapters.json`);
-    if (!r.ok) throw new Error('Could not load chapters.json');
-    chapters = await r.json();
-    renderList();
-    updateArrows();
-    loadProgress();
-  } catch(e) {
-    document.getElementById('chapter-list').innerHTML =
-      `<div class="state-msg"><span class="icon">⚠</span>${e.message}</div>`;
-  }
-}
+        // ── Chapter release schedule ──
+        // On RELEASE_START_DATE, RELEASE_START_COUNT chapters are visible.
+        // Every day after that, 2 more chapters are unlocked.
+        const RELEASE_START_DATE = '2026-07-03'; // YYYY-MM-DD (UTC)
+        const RELEASE_START_COUNT = 200;         // chapters visible on start date
+        const RELEASE_RATE = 5;                  // chapters unlocked per day
 
-// ── Render home list ──
-function renderList() {
-  const el = document.getElementById('chapter-list');
-  let html = '', lastArc = null;
-  chapters.forEach((ch, i) => {
-                    if (ch.arc !== lastArc) {
-                        const c = arcColor(ch.arc);
-                        // Add anchor id to each arc section for jump nav
-                        html += `<div class="arc-label" id="arc-section-${
-                            ch.arc
-                        }" style="color:${
-                            c.accent
-                        }">${
-                            ARC_NAMES[ch.arc] || 'Arc ' + ch.arc
-                        }<span class="arc-rule" style="background:linear-gradient(to right,${
-                            c.dim
-                        },transparent)"></span></div>`;
-                        lastArc = ch.arc;
-                    }
+        function releasedCount(total) {
+            const start = new Date(RELEASE_START_DATE + 'T00:00:00Z');
+            const now = new Date();
+            // Use UTC midnight of today
+            const todayUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+            const daysPassed = Math.max(0, Math.floor((todayUTC - start) / 86400000));
+            return Math.min(total, RELEASE_START_COUNT + daysPassed * RELEASE_RATE);
+        }
+
+        // ── Fetch chapters index ──
+        async function init() {
+            try {
+                const r = await fetch(`${RAW}/chapters.json`);
+                if (!r.ok) throw new Error('Could not load chapters.json');
+                const all = await r.json();
+                allChapters = all; // keep the full list for easter-egg unlock
+                // Slice to currently-released window
+                chapters = all.slice(0, releasedCount(all.length));
+                renderList();
+                updateArrows();
+                loadProgress();
+            } catch (e) {
+                document.getElementById('chapter-list').innerHTML =
+                    `<div class="state-msg"><span class="icon">⚠</span>${e.message}</div>`;
+            }
+        }
+
+        // ── Render home list ──
+        function renderList() {
+            const el = document.getElementById('chapter-list');
+            let html = '', lastArc = null;
+            chapters.forEach((ch, i) => {
+                if (ch.arc !== lastArc) {
                     const c = arcColor(ch.arc);
-                    const num = String(i + 1).padStart(2, '0');
-                    html += `<div class="ch-row" onclick="loadChapter(${i})" style="--arc-accent:${
-                        c.accent
-                    };--arc-dim:${
-                        c.dim
+                    // Add anchor id to each arc section for jump nav
+                    html += `<div class="arc-label" id="arc-section-${ch.arc
+                        }" style="color:${c.accent
+                        }">${ARC_NAMES[ch.arc] || 'Arc ' + ch.arc
+                        }<span class="arc-rule" style="background:linear-gradient(to right,${c.dim
+                        },transparent)"></span></div>`;
+                    lastArc = ch.arc;
+                }
+                const c = arcColor(ch.arc);
+                const num = String(i + 1).padStart(2, '0');
+                html += `<div class="ch-row" onclick="loadChapter(${i})" style="--arc-accent:${c.accent
+                    };--arc-dim:${c.dim
                     }">
       <div class="ch-num">Ch.${num}</div>
       <div class="ch-body-row">
-        <div class="ch-title-row">${
-                        ch.title
+        <div class="ch-title-row">${ch.title
                     }</div>
-        <div class="ch-arc-tag">${
-                        ARC_NAMES[ch.arc] || ''
+        <div class="ch-arc-tag">${ARC_NAMES[ch.arc] || ''
                     }</div>
       </div>
       <div class="ch-arrow">›</div>
     </div>`;
-                }) 
+            })
 
-                    el.innerHTML = html;
-                
-                buildArcNav();
-                observeArcSections();
+            el.innerHTML = html;
+
+
+
+            buildArcNav();
+            observeArcSections();
+            startReleaseTimer();
+        }
+
+        // ── Release countdown timer ──
+        function startReleaseTimer() {
+            const wrap = document.getElementById('release-timer-wrap');
+            if (!wrap) return;
+
+            // Hide if easter egg already unlocked everything, or nothing left to release
+            if (ttsUnlocked || chapters.length >= allChapters.length) {
+                wrap.style.display = 'none';
+                if (releaseTimerInterval) { clearInterval(releaseTimerInterval); releaseTimerInterval = null; }
+                return;
             }
 
-            // ── Arc jump nav ──
-            function buildArcNav() {
-                const nav = document.getElementById('arc-nav');
-                // Collect unique arcs in order
-                const seen = [];
-                chapters.forEach(ch => {
-                    if (! seen.includes(ch.arc)) 
-                        seen.push(ch.arc);
-                    
+            wrap.style.display = 'block';
 
-                });
-                if (seen.length < 2) {
-                    nav.style.display = 'none';
-                    return;
-                }
+            // Label: how many chapters release next tick
+            const remaining = allChapters.length - chapters.length;
+            const nextBatch = Math.min(RELEASE_RATE, remaining);
+            const infoEl = document.getElementById('release-timer-info');
+            if (infoEl) infoEl.textContent =
+                `${nextBatch} new chapter${nextBatch !== 1 ? 's' : ''} unlock in`;
 
-                let pills = '';
-                seen.forEach((arcNum, idx) => {
-                    const c = arcColor(arcNum);
-                    const label = ARC_NAMES[arcNum] || ('Arc ' + arcNum);
-                    // Shorten label: remove the "Arc N ·" prefix leaving just the arc title, but keep full on wider screens
-                    pills += `<button class="arc-pill${
-                        idx === 0 ? ' active' : ''
+            function tick() {
+                const now = new Date();
+                // Next UTC midnight
+                const nextMidnight = new Date(Date.UTC(
+                    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1
+                ));
+                const diff = nextMidnight - now;
+                if (diff <= 0) { location.reload(); return; }
+
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                const pad = n => String(n).padStart(2, '0');
+                const formatted = `${pad(h)}·${pad(m)}·${pad(s)}`;
+                // Update home-view timer
+                const el = document.getElementById('release-countdown');
+                if (el) el.textContent = formatted;
+                // Update chapter-view next button countdown
+                const btn = document.getElementById('bnav-next-countdown');
+                if (btn && btn.style.display !== 'none') btn.textContent = formatted;
+            }
+
+            tick();
+            if (releaseTimerInterval) clearInterval(releaseTimerInterval);
+            releaseTimerInterval = setInterval(tick, 1000);
+        }
+
+        // ── Arc jump nav ──
+        function buildArcNav() {
+            const nav = document.getElementById('arc-nav');
+            // Collect unique arcs in order
+            const seen = [];
+            chapters.forEach(ch => {
+                if (!seen.includes(ch.arc))
+                    seen.push(ch.arc);
+
+
+
+            });
+            if (seen.length < 2) {
+                nav.style.display = 'none';
+                return;
+            }
+
+            let pills = '';
+            seen.forEach((arcNum, idx) => {
+                const c = arcColor(arcNum);
+                const label = ARC_NAMES[arcNum] || ('Arc ' + arcNum);
+                // Shorten label: remove the "Arc N ·" prefix leaving just the arc title, but keep full on wider screens
+                pills += `<button class="arc-pill${idx === 0 ? ' active' : ''
                     }" id="arc-pill-${arcNum}"
-      style="--pill-accent:${
-                        c.accent
+      style="--pill-accent:${c.accent
                     }"
       onclick="jumpToArc(${arcNum})"
       title="Jump to ${label}"
     >${label}</button>`;
-                });
-                nav.innerHTML = pills;
-                nav.style.display = 'flex';
-            }
+            });
+            nav.innerHTML = pills;
+            nav.style.display = 'flex';
+        }
 
-            function jumpToArc(arcNum) {
-                const target = document.getElementById(`arc-section-${arcNum}`);
-                if (! target) 
-                    return;
-                
-
-                // Offset for topbar (52px) + arc-nav bar (~37px)
-                const offset = target.getBoundingClientRect().top + window.scrollY - 52 - 37 - 8;
-                window.scrollTo({top: offset, behavior: 'smooth'});
-            }
-
-            // Intersection observer to highlight the active arc pill
-            let arcObserver = null;
-            function observeArcSections() {
-                if (arcObserver) 
-                    arcObserver.disconnect();
-                
-
-                const sections = document.querySelectorAll('[id^="arc-section-"]');
-                if (! sections.length) 
-                    return;
-                
+        function jumpToArc(arcNum) {
+            const target = document.getElementById(`arc-section-${arcNum}`);
+            if (!target)
+                return;
 
 
-                arcObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const arcNum = entry.target.id.replace('arc-section-', '');
-                            document.querySelectorAll('.arc-pill').forEach(p => p.classList.remove('active'));
-                            const pill = document.getElementById(`arc-pill-${arcNum}`);
-                            if (pill) {
-                                pill.classList.add('active');
-                                // Scroll pill into view within the nav bar
-                                pill.scrollIntoView({inline: 'nearest', behavior: 'smooth', block: 'nearest'});
-                            }
+
+            // Offset for topbar (52px) + arc-nav bar (~37px)
+            const offset = target.getBoundingClientRect().top + window.scrollY - 52 - 37 - 8;
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+
+        // Intersection observer to highlight the active arc pill
+        let arcObserver = null;
+        function observeArcSections() {
+            if (arcObserver)
+                arcObserver.disconnect();
+
+
+
+            const sections = document.querySelectorAll('[id^="arc-section-"]');
+            if (!sections.length)
+                return;
+
+
+
+            arcObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const arcNum = entry.target.id.replace('arc-section-', '');
+                        document.querySelectorAll('.arc-pill').forEach(p => p.classList.remove('active'));
+                        const pill = document.getElementById(`arc-pill-${arcNum}`);
+                        if (pill) {
+                            pill.classList.add('active');
+                            // Scroll pill into view within the nav bar
+                            pill.scrollIntoView({ inline: 'nearest', behavior: 'smooth', block: 'nearest' });
                         }
-                    });
-                }, {
-                    rootMargin: '-52px 0px -60% 0px',
-                    threshold: 0
+                    }
                 });
+            }, {
+                rootMargin: '-52px 0px -60% 0px',
+                threshold: 0
+            });
 
-                sections.forEach(s => arcObserver.observe(s));
-            }
+            sections.forEach(s => arcObserver.observe(s));
+        }
 
-            // ── Load a chapter ──
-            async function loadChapter(idx, restoreScroll = 0) {
-                currentIdx = idx;
-                const ch = chapters[idx];
-                const num = String(idx + 1).padStart(2, '0');
+        // ── Load a chapter ──
+        async function loadChapter(idx, restoreScroll = 0) {
+            currentIdx = idx;
+            const ch = chapters[idx];
+            const num = String(idx + 1).padStart(2, '0');
 
-                // reset TTS for the new chapter
-                ttsStop();
-                document.getElementById('tts-bar').classList.remove('active');
-                ttsActive = false;
-                document.getElementById('tts-toggle-label').textContent = 'Listen to this chapter';
+            // reset TTS for the new chapter
+            ttsStop();
+            document.getElementById('tts-bar').classList.remove('active');
+            ttsActive = false;
+            document.getElementById('tts-toggle-label').textContent = 'Listen to this chapter';
 
-                document.getElementById('view-home').style.display = 'none';
-                document.getElementById('arc-nav').style.display = 'none';
-                document.getElementById('view-chapter').style.display = 'block';
-                window.scrollTo(0, 0);
+            document.getElementById('view-home').style.display = 'none';
+            document.getElementById('arc-nav').style.display = 'none';
+            document.getElementById('view-chapter').style.display = 'block';
+            window.scrollTo(0, 0);
 
-                // Header + arc theming
-                document.getElementById('ch-num-display').textContent = `Chapter ${num}`;
-                document.getElementById('ch-title-display').textContent = ch.title;
-                document.getElementById('ch-arc-display').textContent = ARC_NAMES[ch.arc] || '';
-                document.getElementById('breadcrumb').textContent = `Ch.${num} — ${
-                    ch.title
+            // Header + arc theming
+            document.getElementById('ch-num-display').textContent = `Chapter ${num}`;
+            document.getElementById('ch-title-display').textContent = ch.title;
+            document.getElementById('ch-arc-display').textContent = ARC_NAMES[ch.arc] || '';
+            document.getElementById('breadcrumb').textContent = `Ch.${num} — ${ch.title
                 }`;
 
-                const c = arcColor(ch.arc);
-                document.documentElement.style.setProperty('--arc-accent', c.accent);
-                document.documentElement.style.setProperty('--arc-dim', c.dim);
+            const c = arcColor(ch.arc);
+            document.documentElement.style.setProperty('--arc-accent', c.accent);
+            document.documentElement.style.setProperty('--arc-dim', c.dim);
 
-                updateArrows();
-                updateTtsBarInfo();
+            updateArrows();
+            updateTtsBarInfo();
 
-                document.getElementById('prose-body').innerHTML = '<div class="state-msg"><span class="icon">⟳</span>Loading chapter...</div>';
+            document.getElementById('prose-body').innerHTML = '<div class="state-msg"><span class="icon">⟳</span>Loading chapter...</div>';
 
-                try {
-                    const r = await fetch(`${RAW}/chapters/${
-                        ch.id
+            try {
+                const r = await fetch(`${RAW}/chapters/${ch.id
                     }.md`);
-                    if (! r.ok) 
-                        throw new Error(`Chapter file not found: ${
-                            ch.id
+                if (!r.ok)
+                    throw new Error(`Chapter file not found: ${ch.id
                         }.md`);
-                    
 
-                    const md = await r.text();
-                    document.getElementById('prose-body').innerHTML = parseMd(stripDuplicateTitle(md, ch.title));
-                    document.getElementById('prose-body').dataset.ttsReady = '';
-                    if (restoreScroll) 
-                        setTimeout(() => window.scrollTo(0, restoreScroll), 50);
-                    
 
-                } catch (e) {
-                    document.getElementById('prose-body').innerHTML = `<div class="state-msg"><span class="icon">⚠</span>${
-                        e.message
+
+                const md = await r.text();
+                document.getElementById('prose-body').innerHTML = parseMd(stripDuplicateTitle(md, ch.title));
+                document.getElementById('prose-body').dataset.ttsReady = '';
+                if (restoreScroll)
+                    setTimeout(() => window.scrollTo(0, restoreScroll), 50);
+
+
+
+            } catch (e) {
+                document.getElementById('prose-body').innerHTML = `<div class="state-msg"><span class="icon">⚠</span>${e.message
                     }</div>`;
+            }
+        }
+
+        function showHome() {
+            document.getElementById('view-home').style.display = 'block';
+            document.getElementById('view-chapter').style.display = 'none';
+            const nav = document.getElementById('arc-nav');
+            if (nav.children.length > 1)
+                nav.style.display = 'flex';
+
+
+
+            document.getElementById('breadcrumb').textContent = 'Arc I — The Night Shift';
+            location.hash = '';
+            window.scrollTo(0, 0);
+        }
+
+        // ── Easter egg: trace the sacred shape to unlock the listen player (or tap the ant icon 5x) ──
+        let antTapCount = 0;
+        let antTapTimer = null;
+        let ttsUnlocked = false;
+
+        function handleAntClick() {
+            showHome();
+            antTapCount++;
+            clearTimeout(antTapTimer);
+            antTapTimer = setTimeout(() => {
+                antTapCount = 0;
+            }, 1500);
+            if (antTapCount >= 5) {
+                antTapCount = 0;
+                unlockTTS();
+                showToast("A persistent searcher unlocks the voice.", true);
+            }
+        }
+
+        function unlockTTS() {
+            if (ttsUnlocked)
+                return;
+
+            ttsUnlocked = true;
+            document.getElementById('tts-toggle-btn').classList.add('unlocked');
+            const home = document.getElementById('home-btn');
+            home.style.color = 'var(--amber)';
+            setTimeout(() => {
+                home.style.color = '';
+            }, 600);
+
+            // Also unlock all unreleased chapters
+            if (allChapters.length > chapters.length) {
+                chapters = allChapters;
+                renderList();
+                updateArrows();
+            }
+        }
+
+        // ── Gesture Tracking & Shape Recognition ──
+        let isDrawing = false;
+        let hasMoved = false;
+        let startX = 0,
+            startY = 0;
+        let drawnPoints = [];
+        let pathAlpha = 0;
+        let animId = null;
+        let particles = [];
+
+        const canvas = document.getElementById('gesture-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 4;
+                this.vy = (Math.random() - 0.5) * 4;
+                this.radius = Math.random() * 3 + 2;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.015;
+                this.color = color || '#c8a84b';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createParticle(x, y, color) {
+            particles.push(new Particle(x, y, color));
+        }
+
+        function startAnimLoop() {
+            if (!animId) {
+                animId = requestAnimationFrame(drawLoop);
+            }
+        }
+
+        function drawLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw particles
+            particles = particles.filter(p => p.alpha > 0);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw path
+            if (drawnPoints.length > 1 && pathAlpha > 0) {
+                ctx.save();
+                ctx.globalAlpha = pathAlpha;
+                ctx.beginPath();
+                ctx.moveTo(drawnPoints[0].x, drawnPoints[0].y);
+                for (let i = 1; i < drawnPoints.length; i++) {
+                    ctx.lineTo(drawnPoints[i].x, drawnPoints[i].y);
+                }
+                ctx.strokeStyle = '#c8a84b';
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#e8b84b';
+                ctx.stroke();
+                ctx.restore();
+
+                if (!isDrawing) {
+                    pathAlpha -= 0.05;
                 }
             }
 
-            function showHome() {
-                document.getElementById('view-home').style.display = 'block';
-                document.getElementById('view-chapter').style.display = 'none';
-                const nav = document.getElementById('arc-nav');
-                if (nav.children.length > 1) 
-                    nav.style.display = 'flex';
-                
+            if (particles.length > 0 || (drawnPoints.length > 1 && pathAlpha > 0) || isDrawing) {
+                animId = requestAnimationFrame(drawLoop);
+            } else {
+                animId = null;
+            }
+        }
 
-                document.getElementById('breadcrumb').textContent = 'Arc I — The Night Shift';
-                location.hash = '';
-                window.scrollTo(0, 0);
+        function triggerGoldBurst() {
+            const c = centroid(drawnPoints);
+            const colors = ['#e8d49a', '#c8a84b', '#e8b84b', '#ffffff'];
+            for (let i = 0; i < 80; i++) {
+                const p = new Particle(c.x, c.y, colors[Math.floor(Math.random() * colors.length)]);
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 8 + 3;
+                p.vx = Math.cos(angle) * speed;
+                p.vy = Math.sin(angle) * speed;
+                p.radius = Math.random() * 4 + 2;
+                p.decay = Math.random() * 0.01 + 0.01;
+                particles.push(p);
+            }
+            startAnimLoop();
+        }
+
+        function triggerFailureGlow() {
+            const lastPt = drawnPoints[drawnPoints.length - 1];
+            for (let i = 0; i < 20; i++) {
+                const p = new Particle(lastPt.x, lastPt.y, '#e0524c');
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 3 + 1;
+                p.vx = Math.cos(angle) * speed;
+                p.vy = Math.sin(angle) * speed;
+                p.decay = 0.03;
+                particles.push(p);
+            }
+            startAnimLoop();
+        }
+
+        function showToast(msg, isSuccess) {
+            const toast = document.getElementById('gesture-toast');
+            if (!toast)
+                return;
+
+            toast.textContent = msg;
+            toast.style.borderColor = isSuccess ? 'var(--gold)' : '#e0524c';
+            toast.style.color = isSuccess ? 'var(--gold-pale)' : '#eef0f8';
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+
+            clearTimeout(toast.timeout);
+            toast.timeout = setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+            }, 2500);
+        }
+
+        // ── Math & Recognizer Utils ──
+        function distance(p1, p2) {
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        function pathLength(points) {
+            let d = 0;
+            for (let i = 1; i < points.length; i++) {
+                d += distance(points[i - 1], points[i]);
+            }
+            return d;
+        }
+
+        function resample(points, n) {
+            const pts = points.map(p => ({ x: p.x, y: p.y }));
+            const I = pathLength(pts) / (n - 1);
+            let D = 0;
+            const newPoints = [{
+                x: pts[0].x,
+                y: pts[0].y
+            }];
+            let i = 1;
+            while (i < pts.length) {
+                const p1 = pts[i - 1];
+                const p2 = pts[i];
+                const d = distance(p1, p2);
+                if (d === 0) {
+                    i++;
+                    continue;
+                }
+                if ((D + d) >= I) {
+                    const t = (I - D) / d;
+                    const q = {
+                        x: p1.x + t * (p2.x - p1.x),
+                        y: p1.y + t * (p2.y - p1.y)
+                    };
+                    newPoints.push(q);
+                    pts[i - 1] = q;
+                    D = 0;
+                } else {
+                    D += d;
+                    i++;
+                }
+            }
+            while (newPoints.length < n) {
+                newPoints.push({ x: points[points.length - 1].x, y: points[points.length - 1].y });
+            }
+            return newPoints.slice(0, n);
+        }
+
+        function centroid(points) {
+            let x = 0, y = 0;
+            for (let i = 0; i < points.length; i++) {
+                x += points[i].x;
+                y += points[i].y;
+            }
+            return { x: x / points.length, y: y / points.length };
+        }
+
+        function boundingBox(points) {
+            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+            for (let i = 0; i < points.length; i++) {
+                minX = Math.min(minX, points[i].x);
+                maxX = Math.max(maxX, points[i].x);
+                minY = Math.min(minY, points[i].y);
+                maxY = Math.max(maxY, points[i].y);
+            }
+            return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+        }
+
+        function scaleTo(points, size) {
+            const box = boundingBox(points);
+            const maxDim = Math.max(box.width, box.height, 1);
+            const newPoints = [];
+            for (let i = 0; i < points.length; i++) {
+                const px = points[i].x * (size / maxDim);
+                const py = points[i].y * (size / maxDim);
+                newPoints.push({ x: px, y: py });
+            }
+            return newPoints;
+        }
+
+        function translateTo(points, pt) {
+            const c = centroid(points);
+            const newPoints = [];
+            for (let i = 0; i < points.length; i++) {
+                const px = points[i].x + pt.x - c.x;
+                const py = points[i].y + pt.y - c.y;
+                newPoints.push({ x: px, y: py });
+            }
+            return newPoints;
+        }
+
+        function rotateBy(points, theta) {
+            const c = centroid(points);
+            const cos = Math.cos(theta);
+            const sin = Math.sin(theta);
+            const newPoints = [];
+            for (let i = 0; i < points.length; i++) {
+                const dx = points[i].x - c.x;
+                const dy = points[i].y - c.y;
+                const rx = dx * cos - dy * sin + c.x;
+                const ry = dx * sin + dy * cos + c.y;
+                newPoints.push({ x: rx, y: ry });
+            }
+            return newPoints;
+        }
+
+        function alignRotation(points) {
+            const c = centroid(points);
+            const p0 = points[0];
+            const theta = Math.atan2(p0.y - c.y, p0.x - c.x);
+            return rotateBy(points, -theta);
+        }
+
+        function pathDistance(path1, path2) {
+            let d = 0;
+            for (let i = 0; i < path1.length; i++) {
+                d += distance(path1[i], path2[i]);
+            }
+            return d / path1.length;
+        }
+
+        function generateHexagonTemplate(n) {
+            const vertices = [];
+            for (let i = 0; i <= 6; i++) {
+                const angle = (i * Math.PI / 3);
+                vertices.push({ x: Math.cos(angle), y: Math.sin(angle) });
+            }
+            return resample(vertices, n);
+        }
+
+        function generateCircleTemplate(n) {
+            const vertices = [];
+            for (let i = 0; i < n; i++) {
+                const angle = (i * Math.PI * 2) / n;
+                vertices.push({ x: Math.cos(angle), y: Math.sin(angle) });
+            }
+            return vertices;
+        }
+
+        function scoreAgainstTemplate(pts, template) {
+            const N = pts.length;
+            let tempPts = scaleTo(template, 100);
+            tempPts = translateTo(tempPts, { x: 0, y: 0 });
+
+            let minD = Infinity;
+            for (let shift = 0; shift < N; shift++) {
+                let shifted = [];
+                for (let i = 0; i < N; i++) {
+                    shifted.push(tempPts[(i + shift) % N]);
+                }
+                shifted = alignRotation(shifted);
+
+                const d1 = pathDistance(pts, shifted);
+                if (d1 < minD) minD = d1;
+
+                let reversed = [...shifted].reverse();
+                reversed = alignRotation(reversed);
+                const d2 = pathDistance(pts, reversed);
+                if (d2 < minD) minD = d2;
+            }
+            return Math.max(0, 1 - minD / 30);
+        }
+        function getRadialStandardDeviation(points) {
+            const dists = points.map(p => Math.sqrt(p.x * p.x + p.y * p.y));
+            const avg = dists.reduce((sum, d) => sum + d, 0) / dists.length;
+            const variance = dists.reduce((sum, d) => sum + Math.pow(d - avg, 2), 0) / dists.length;
+            return Math.sqrt(variance);
+        }
+
+        function checkGesture(inputPoints) {
+            if (inputPoints.length < 10) return 0;
+
+            const N = 64;
+            let pts = resample(inputPoints, N);
+            pts = scaleTo(pts, 100);
+            pts = translateTo(pts, { x: 0, y: 0 });
+            pts = alignRotation(pts);
+
+            const hexTemplate = generateHexagonTemplate(N);
+            const circleTemplate = generateCircleTemplate(N);
+
+            const scoreHex = scoreAgainstTemplate(pts, hexTemplate);
+            const scoreCircle = scoreAgainstTemplate(pts, circleTemplate);
+            const radialStd = getRadialStandardDeviation(pts);
+
+            console.log(`Cell symmetry: ${scoreHex.toFixed(3)}, Curvature: ${scoreCircle.toFixed(3)}, Radial variation: ${radialStd.toFixed(3)}`);
+
+            const isCircleLike = scoreCircle > 0.75 && radialStd < 3.0;
+
+            if (scoreHex > 0.78 && scoreHex > scoreCircle && radialStd >= 3.0) {
+                const percent = Math.round(scoreHex * 100);
+                showToast(`The six-fold boundary is complete (Symmetry: ${percent}%). Secret unlocked.`, true);
+                return scoreHex;
+            } else if (isCircleLike) {
+                showToast("A loop of pure curvature... but the colony builds with corners and straight walls.", false);
+            } else {
+                const percent = Math.round(scoreHex * 100);
+                showToast(`The trace is lost. Cell symmetry: ${percent}%.`, false);
+            }
+            return 0;
+        }
+
+        // ── Event Handlers & Scanner ──
+        let drawModeTimer = null;
+        let isDrawingMode = false;
+        let activeStartElement = null;
+
+        function handleAntStart(e) {
+            if (e.target.closest('.nav-arr')) return;
+            if (e.cancelable) e.preventDefault();
+
+            resizeCanvas();
+
+            const touch = e.touches ? e.touches[0] : e;
+            startX = touch.clientX;
+            startY = touch.clientY;
+            drawnPoints = [];
+            isDrawing = false;
+            activeStartElement = e.target;
+
+            clearTimeout(drawModeTimer);
+            drawModeTimer = setTimeout(enterDrawingMode, 500);
+        }
+
+        function enterDrawingMode() {
+            drawModeTimer = null;
+            isDrawingMode = true;
+            isDrawing = true;
+            pathAlpha = 1;
+
+            if (navigator.vibrate) navigator.vibrate(40);
+
+            const cvs = document.getElementById('gesture-canvas');
+            cvs.style.pointerEvents = 'auto';
+            cvs.style.background = 'rgba(7, 8, 12, 0.7)';
+            cvs.style.boxShadow = 'inset 0 0 80px rgba(200, 168, 75, 0.2)';
+
+            showToast("The hive scanner is active. Trace the geometry...", true);
+            resizeCanvas();
+            startAnimLoop();
+        }
+
+        function exitDrawingMode() {
+            isDrawingMode = false;
+            isDrawing = false;
+            activeStartElement = null;
+
+            const cvs = document.getElementById('gesture-canvas');
+            cvs.style.pointerEvents = 'none';
+            cvs.style.background = 'transparent';
+            cvs.style.boxShadow = 'none';
+        }
+
+        function handleGlobalMove(e) {
+            if (!isDrawingMode) {
+                if (drawModeTimer) {
+                    const touch = e.touches ? e.touches[0] : e;
+                    const dx = touch.clientX - startX;
+                    const dy = touch.clientY - startY;
+                    if (Math.sqrt(dx * dx + dy * dy) > 15) {
+                        clearTimeout(drawModeTimer);
+                        drawModeTimer = null;
+                    }
+                }
+                return;
             }
 
-            // ── Easter egg: trace the sacred shape to unlock the listen player (or tap the ant icon 5x) ──
-            let antTapCount = 0;
-            let antTapTimer = null;
-            let ttsUnlocked = false;
+            if (!isDrawing) return;
 
-            function handleAntClick() {
-                showHome();
-                antTapCount++;
-                clearTimeout(antTapTimer);
-                antTapTimer = setTimeout(() => {
-                    antTapCount = 0;
-                }, 1500);
-                if (antTapCount >= 5) {
-                    antTapCount = 0;
+            if (e.cancelable) e.preventDefault();
+            const touch = e.touches ? e.touches[0] : e;
+            const x = touch.clientX;
+            const y = touch.clientY;
+
+            drawnPoints.push({ x, y });
+            createParticle(x, y);
+            startAnimLoop();
+        }
+
+        function handleGlobalEnd(e) {
+            if (drawModeTimer) {
+                clearTimeout(drawModeTimer);
+                drawModeTimer = null;
+                // Only navigate home if we actually tapped the home button or inside it
+                if (activeStartElement && activeStartElement.closest('#home-btn')) {
+                    handleAntClick();
+                }
+                activeStartElement = null;
+                return;
+            }
+
+            if (!isDrawingMode) return;
+            isDrawing = false;
+
+            if (drawnPoints.length > 5) {
+                const score = checkGesture(drawnPoints);
+                if (score > 0) {
                     unlockTTS();
-                    showToast("A persistent searcher unlocks the voice.", true);
-                }
-            }
-
-            function unlockTTS() {
-                if (ttsUnlocked) 
-                    return;
-                
-
-                ttsUnlocked = true;
-                document.getElementById('tts-toggle-btn').classList.add('unlocked');
-                const home = document.getElementById('home-btn');
-                home.style.color = 'var(--amber)';
-                setTimeout(() => {
-                    home.style.color = '';
-                }, 600);
-            }
-
-            // ── Gesture Tracking & Shape Recognition ──
-            let isDrawing = false;
-            let hasMoved = false;
-            let startX = 0,
-                startY = 0;
-            let drawnPoints = [];
-            let pathAlpha = 0;
-            let animId = null;
-            let particles = [];
-
-            const canvas = document.getElementById('gesture-canvas');
-            const ctx = canvas.getContext('2d');
-
-            function resizeCanvas() {
-                if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                }
-            }
-
-            class Particle {
-                constructor(x, y, color) {
-                    this.x = x;
-                    this.y = y;
-                    this.vx = (Math.random() - 0.5) * 4;
-                    this.vy = (Math.random() - 0.5) * 4;
-                    this.radius = Math.random() * 3 + 2;
-                    this.alpha = 1;
-                    this.decay = Math.random() * 0.02 + 0.015;
-                    this.color = color || '#c8a84b';
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    this.alpha -= this.decay;
-                }
-                draw() {
-                    ctx.save();
-                    ctx.globalAlpha = this.alpha;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.shadowBlur = 8;
-                    ctx.shadowColor = this.color;
-                    ctx.fill();
-                    ctx.restore();
-                }
-            }
-
-            function createParticle(x, y, color) {
-                particles.push(new Particle(x, y, color));
-            }
-
-            function startAnimLoop() {
-                if (! animId) {
-                    animId = requestAnimationFrame(drawLoop);
-                }
-            }
-
-            function drawLoop() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Update and draw particles
-                particles = particles.filter(p => p.alpha > 0);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-
-                // Draw path
-                if (drawnPoints.length > 1 && pathAlpha > 0) {
-                    ctx.save();
-                    ctx.globalAlpha = pathAlpha;
-                    ctx.beginPath();
-                    ctx.moveTo(drawnPoints[0].x, drawnPoints[0].y);
-                    for (let i = 1; i < drawnPoints.length; i++) {
-                        ctx.lineTo(drawnPoints[i].x, drawnPoints[i].y);
-                    }
-                    ctx.strokeStyle = '#c8a84b';
-                    ctx.lineWidth = 4;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = '#e8b84b';
-                    ctx.stroke();
-                    ctx.restore();
-
-                    if (! isDrawing) {
-                        pathAlpha -= 0.05;
-                    }
-                }
-
-                if (particles.length > 0 || (drawnPoints.length > 1 && pathAlpha > 0) || isDrawing) {
-                    animId = requestAnimationFrame(drawLoop);
+                    triggerGoldBurst();
                 } else {
-                    animId = null;
+                    triggerFailureGlow();
                 }
             }
+            exitDrawingMode();
+        }
 
-            function triggerGoldBurst() {
-                const c = centroid(drawnPoints);
-                const colors = ['#e8d49a', '#c8a84b', '#e8b84b', '#ffffff'];
-                for (let i = 0; i < 80; i++) {
-                    const p = new Particle(c.x, c.y, colors[Math.floor(Math.random() * colors.length)]);
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 8 + 3;
-                    p.vx = Math.cos(angle) * speed;
-                    p.vy = Math.sin(angle) * speed;
-                    p.radius = Math.random() * 4 + 2;
-                    p.decay = Math.random() * 0.01 + 0.01;
-                    particles.push(p);
-                }
-                startAnimLoop();
+        // Attach Event Listeners
+        const topBar = document.getElementById('topbar');
+        if (topBar) {
+            topBar.addEventListener('mousedown', handleAntStart);
+            topBar.addEventListener('touchstart', handleAntStart, { passive: false });
+        }
+
+        window.addEventListener('mousemove', handleGlobalMove);
+        window.addEventListener('touchmove', handleGlobalMove, { passive: false });
+
+        window.addEventListener('mouseup', handleGlobalEnd);
+        window.addEventListener('touchend', handleGlobalEnd);
+
+        function navigate(dir) {
+            const next = currentIdx + dir;
+            if (next >= 0 && next < chapters.length) loadChapter(next);
+        }
+
+        function updateArrows() {
+            const hasPrev = currentIdx > 0;
+            const hasNext = currentIdx < chapters.length - 1;
+            const isLastReleased = !hasNext && !ttsUnlocked && allChapters.length > chapters.length;
+
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            btnPrev.classList.toggle('disabled', !hasPrev);
+            btnNext.classList.toggle('disabled', !hasNext);
+
+            const bPrev = document.getElementById('bnav-prev');
+            if (hasPrev) {
+                bPrev.classList.remove('hidden');
+                document.getElementById('bnav-prev-title').textContent = chapters[currentIdx - 1].title;
+            } else {
+                bPrev.classList.add('hidden');
             }
 
-            function triggerFailureGlow() {
-                const lastPt = drawnPoints[drawnPoints.length - 1];
-                for (let i = 0; i < 20; i++) {
-                    const p = new Particle(lastPt.x, lastPt.y, '#e0524c');
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 3 + 1;
-                    p.vx = Math.cos(angle) * speed;
-                    p.vy = Math.sin(angle) * speed;
-                    p.decay = 0.03;
-                    particles.push(p);
-                }
-                startAnimLoop();
+            const bNext = document.getElementById('bnav-next');
+            const bNextCountdown = document.getElementById('bnav-next-countdown');
+            const bNextTitle = document.getElementById('bnav-next-title');
+            if (hasNext) {
+                bNext.classList.remove('hidden');
+                bNext.classList.remove('countdown-mode');
+                bNextTitle.textContent = chapters[currentIdx + 1].title;
+                bNextCountdown.style.display = 'none';
+            } else if (isLastReleased) {
+                // Show a countdown instead of hiding the button
+                bNext.classList.remove('hidden');
+                bNext.classList.add('countdown-mode');
+                const remaining = allChapters.length - chapters.length;
+                const nextBatch = Math.min(RELEASE_RATE, remaining);
+                bNextTitle.textContent = `${nextBatch} new chapter${nextBatch !== 1 ? 's' : ''} dropping in`;
+                bNextCountdown.style.display = 'block';
+            } else {
+                bNext.classList.add('hidden');
+                bNext.classList.remove('countdown-mode');
+                bNextCountdown.style.display = 'none';
             }
+        }
 
-            function showToast(msg, isSuccess) {
-                const toast = document.getElementById('gesture-toast');
-                if (! toast) 
-                    return;
-                
+        // ── Reading progress bar + save ──
+        window.addEventListener('scroll', () => {
+            const doc = document.documentElement;
+            const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+            document.getElementById('progress').style.width = pct + '%';
+            document.getElementById('scroll-top').classList.toggle('show', doc.scrollTop > 400);
+            if (document.getElementById('view-chapter').style.display !== 'none') saveProgress();
+        });
 
-                toast.textContent = msg;
-                toast.style.borderColor = isSuccess ? 'var(--gold)' : '#e0524c';
-                toast.style.color = isSuccess ? 'var(--gold-pale)' : '#eef0f8';
-                toast.style.opacity = '1';
-                toast.style.transform = 'translateX(-50%) translateY(0)';
+        // ── Keyboard nav ──
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('view-chapter').style.display === 'none') return;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+            if (e.key === 'Escape') showHome();
+        });
 
-                clearTimeout(toast.timeout);
-                toast.timeout = setTimeout(() => {
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateX(-50%) translateY(20px)';
-                }, 2500);
-            }
+        // ── Text-to-Speech (free, browser-native, works on mobile + desktop) ──
+        let ttsUtterances = [];
+        let ttsIdx = 0;
+        let ttsActive = false;
+        let ttsPaused = false;
+        let ttsVoices = [];
+        let ttsRate = 1;
+        let ttsPitch = 1;
 
-            // ── Math & Recognizer Utils ──
-            function distance(p1, p2) {
-                const dx = p2.x - p1.x;
-                const dy = p2.y - p1.y;
-                return Math.sqrt(dx * dx + dy * dy);
-            }
+        function loadVoices() {
+            ttsVoices = speechSynthesis.getVoices().filter(v => v.lang === 'en-GB' || v.lang === 'en-US');
+            if (!ttsVoices.length) ttsVoices = speechSynthesis.getVoices().filter(v => v.lang === 'en')
 
-            function pathLength(points) {
-                let d = 0;
-                for (let i = 1; i < points.length; i++) {
-                    d += distance(points[i - 1], points[i]);
-                }
-                return d;
-            }
+            if (!ttsVoices.length)
+                ttsVoices = speechSynthesis.getVoices();
 
-            function resample(points, n) {
-                const pts = points.map(p => ({x: p.x, y: p.y}));
-                const I = pathLength(pts) / (n - 1);
-                let D = 0;
-                const newPoints = [{
-                        x: pts[0].x,
-                        y: pts[0].y
-                    }];
-                let i = 1;
-                while (i < pts.length) {
-                    const p1 = pts[i - 1];
-                    const p2 = pts[i];
-                    const d = distance(p1, p2);
-                    if (d === 0) {
-                        i++;
-                        continue;
-                    }
-                    if ((D + d) >= I) {
-                        const t = (I - D) / d;
-                        const q = {
-                            x: p1.x + t * (p2.x - p1.x),
-                            y: p1.y + t * (p2.y - p1.y)
-                        };
-                        newPoints.push(q);
-                        pts[i - 1] = q;
-                        D = 0;
-                    } else {
-                        D += d;
-                        i++;
-                    }
-                }
-                while (newPoints.length<n) {
-    newPoints.push({ x: points[points.length - 1].x, y: points[points.length - 1].y });
-  }
-  return newPoints.slice(0, n);
-}
 
-function centroid(points) {
-  let x = 0, y = 0;
-  for (let i = 0; i < points.length; i++) {
-    x += points[i].x;
-    y += points[i].y;
-  }
-  return { x: x / points.length, y: y / points.length };
-}
 
-function boundingBox(points) {
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  for (let i = 0; i < points.length; i++) {
-    minX = Math.min(minX, points[i].x);
-    maxX = Math.max(maxX, points[i].x);
-    minY = Math.min(minY, points[i].y);
-    maxY = Math.max(maxY, points[i].y);
-  }
-  return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
-}
 
-function scaleTo(points, size) {
-  const box = boundingBox(points);
-  const maxDim = Math.max(box.width, box.height, 1);
-  const newPoints = [];
-  for (let i = 0; i < points.length; i++) {
-    const px = points[i].x * (size / maxDim);
-    const py = points[i].y * (size / maxDim);
-    newPoints.push({ x: px, y: py });
-  }
-  return newPoints;
-}
-
-function translateTo(points, pt) {
-  const c = centroid(points);
-  const newPoints = [];
-  for (let i = 0; i < points.length; i++) {
-    const px = points[i].x + pt.x - c.x;
-    const py = points[i].y + pt.y - c.y;
-    newPoints.push({ x: px, y: py });
-  }
-  return newPoints;
-}
-
-function rotateBy(points, theta) {
-  const c = centroid(points);
-  const cos = Math.cos(theta);
-  const sin = Math.sin(theta);
-  const newPoints = [];
-  for (let i = 0; i < points.length; i++) {
-    const dx = points[i].x - c.x;
-    const dy = points[i].y - c.y;
-    const rx = dx * cos - dy * sin + c.x;
-    const ry = dx * sin + dy * cos + c.y;
-    newPoints.push({ x: rx, y: ry });
-  }
-  return newPoints;
-}
-
-function alignRotation(points) {
-  const c = centroid(points);
-  const p0 = points[0];
-  const theta = Math.atan2(p0.y - c.y, p0.x - c.x);
-  return rotateBy(points, -theta);
-}
-
-function pathDistance(path1, path2) {
-  let d = 0;
-  for (let i = 0; i < path1.length; i++) {
-    d += distance(path1[i], path2[i]);
-  }
-  return d / path1.length;
-}
-
-function generateHexagonTemplate(n) {
-  const vertices = [];
-  for (let i = 0; i <= 6; i++) {
-    const angle = (i * Math.PI / 3);
-    vertices.push({ x: Math.cos(angle), y: Math.sin(angle) });
-  }
-  return resample(vertices, n);
-}
-
-function generateCircleTemplate(n) {
-  const vertices = [];
-  for (let i = 0; i < n; i++) {
-    const angle = (i * Math.PI * 2) / n;
-    vertices.push({ x: Math.cos(angle), y: Math.sin(angle) });
-  }
-  return vertices;
-}
-
-function scoreAgainstTemplate(pts, template) {
-  const N = pts.length;
-  let tempPts = scaleTo(template, 100);
-  tempPts = translateTo(tempPts, { x: 0, y: 0 });
-  
-  let minD = Infinity;
-  for (let shift = 0; shift < N; shift++) {
-    let shifted = [];
-    for (let i = 0; i < N; i++) {
-      shifted.push(tempPts[(i + shift) % N]);
-    }
-    shifted = alignRotation(shifted);
-    
-    const d1 = pathDistance(pts, shifted);
-    if (d1 < minD) minD = d1;
-    
-    let reversed = [...shifted].reverse();
-    reversed = alignRotation(reversed);
-    const d2 = pathDistance(pts, reversed);
-    if (d2 < minD) minD = d2;
-  }
-  return Math.max(0, 1 - minD / 30);
-}
-function getRadialStandardDeviation(points) {
-  const dists = points.map(p => Math.sqrt(p.x * p.x + p.y * p.y));
-  const avg = dists.reduce((sum, d) => sum + d, 0) / dists.length;
-  const variance = dists.reduce((sum, d) => sum + Math.pow(d - avg, 2), 0) / dists.length;
-  return Math.sqrt(variance);
-}
-
-function checkGesture(inputPoints) {
-  if (inputPoints.length < 10) return 0;
-  
-  const N = 64;
-  let pts = resample(inputPoints, N);
-  pts = scaleTo(pts, 100);
-  pts = translateTo(pts, { x: 0, y: 0 });
-  pts = alignRotation(pts);
-  
-  const hexTemplate = generateHexagonTemplate(N);
-  const circleTemplate = generateCircleTemplate(N);
-  
-  const scoreHex = scoreAgainstTemplate(pts, hexTemplate);
-  const scoreCircle = scoreAgainstTemplate(pts, circleTemplate);
-  const radialStd = getRadialStandardDeviation(pts);
-  
-  console.log(`Cell symmetry: ${scoreHex.toFixed(3)}, Curvature: ${scoreCircle.toFixed(3)}, Radial variation: ${radialStd.toFixed(3)}`);
-  
-  const isCircleLike = scoreCircle > 0.75 && radialStd < 3.0;
-  
-  if (scoreHex > 0.78 && scoreHex > scoreCircle && radialStd >= 3.0) {
-    const percent = Math.round(scoreHex * 100);
-    showToast(`The six-fold boundary is complete (Symmetry: ${percent}%). Secret unlocked.`, true);
-    return scoreHex;
-  } else if (isCircleLike) {
-    showToast("A loop of pure curvature... but the colony builds with corners and straight walls.", false);
-  } else {
-    const percent = Math.round(scoreHex * 100);
-    showToast(`The trace is lost. Cell symmetry: ${percent}%.`, false);
-  }
-  return 0;
-}
-
-// ── Event Handlers & Scanner ──
-let drawModeTimer = null;
-let isDrawingMode = false;
-let activeStartElement = null;
-
-function handleAntStart(e) {
-  if (e.target.closest('.nav-arr')) return;
-  if (e.cancelable) e.preventDefault();
-  
-  resizeCanvas();
-  
-  const touch = e.touches ? e.touches[0] : e;
-  startX = touch.clientX;
-  startY = touch.clientY;
-  drawnPoints = [];
-  isDrawing = false;
-  activeStartElement = e.target;
-  
-  clearTimeout(drawModeTimer);
-  drawModeTimer = setTimeout(enterDrawingMode, 500);
-}
-
-function enterDrawingMode() {
-  drawModeTimer = null;
-  isDrawingMode = true;
-  isDrawing = true;
-  pathAlpha = 1;
-  
-  if (navigator.vibrate) navigator.vibrate(40);
-  
-  const cvs = document.getElementById('gesture-canvas');
-  cvs.style.pointerEvents = 'auto';
-  cvs.style.background = 'rgba(7, 8, 12, 0.7)';
-  cvs.style.boxShadow = 'inset 0 0 80px rgba(200, 168, 75, 0.2)';
-  
-  showToast("The hive scanner is active. Trace the geometry...", true);
-  resizeCanvas();
-  startAnimLoop();
-}
-
-function exitDrawingMode() {
-  isDrawingMode = false;
-  isDrawing = false;
-  activeStartElement = null;
-  
-  const cvs = document.getElementById('gesture-canvas');
-  cvs.style.pointerEvents = 'none';
-  cvs.style.background = 'transparent';
-  cvs.style.boxShadow = 'none';
-}
-
-function handleGlobalMove(e) {
-  if (!isDrawingMode) {
-    if (drawModeTimer) {
-      const touch = e.touches ? e.touches[0] : e;
-      const dx = touch.clientX - startX;
-      const dy = touch.clientY - startY;
-      if (Math.sqrt(dx*dx + dy*dy) > 15) {
-        clearTimeout(drawModeTimer);
-        drawModeTimer = null;
-      }
-    }
-    return;
-  }
-  
-  if (!isDrawing) return;
-  
-  if (e.cancelable) e.preventDefault();
-  const touch = e.touches ? e.touches[0] : e;
-  const x = touch.clientX;
-  const y = touch.clientY;
-  
-  drawnPoints.push({ x, y });
-  createParticle(x, y);
-  startAnimLoop();
-}
-
-function handleGlobalEnd(e) {
-  if (drawModeTimer) {
-    clearTimeout(drawModeTimer);
-    drawModeTimer = null;
-    // Only navigate home if we actually tapped the home button or inside it
-    if (activeStartElement && activeStartElement.closest('#home-btn')) {
-      handleAntClick();
-    }
-    activeStartElement = null;
-    return;
-  }
-  
-  if (!isDrawingMode) return;
-  isDrawing = false;
-  
-  if (drawnPoints.length > 5) {
-    const score = checkGesture(drawnPoints);
-    if (score > 0) {
-      unlockTTS();
-      triggerGoldBurst();
-    } else {
-      triggerFailureGlow();
-    }
-  }
-  exitDrawingMode();
-}
-
-// Attach Event Listeners
-const topBar = document.getElementById('topbar');
-if (topBar) {
-  topBar.addEventListener('mousedown', handleAntStart);
-  topBar.addEventListener('touchstart', handleAntStart, { passive: false });
-}
-
-window.addEventListener('mousemove', handleGlobalMove);
-window.addEventListener('touchmove', handleGlobalMove, { passive: false });
-
-window.addEventListener('mouseup', handleGlobalEnd);
-window.addEventListener('touchend', handleGlobalEnd);
-
-function navigate(dir) {
-  const next = currentIdx + dir;
-  if (next >= 0 && next < chapters.length) loadChapter(next);
-}
-
-function updateArrows() {
-  const hasPrev = currentIdx > 0;
-  const hasNext = currentIdx < chapters.length - 1;
-
-  const btnPrev = document.getElementById('btn-prev');
-  const btnNext = document.getElementById('btn-next');
-  btnPrev.classList.toggle('disabled', !hasPrev);
-  btnNext.classList.toggle('disabled', !hasNext);
-
-  const bPrev = document.getElementById('bnav-prev');
-  if (hasPrev) {
-    bPrev.classList.remove('hidden');
-    document.getElementById('bnav-prev-title').textContent = chapters[currentIdx - 1].title;
-  } else {
-    bPrev.classList.add('hidden');
-  }
-
-  const bNext = document.getElementById('bnav-next');
-  if (hasNext) {
-    bNext.classList.remove('hidden');
-    document.getElementById('bnav-next-title').textContent = chapters[currentIdx + 1].title;
-  } else {
-    bNext.classList.add('hidden');
-  }
-}
-
-// ── Reading progress bar + save ──
-window.addEventListener('scroll', () => {
-  const doc = document.documentElement;
-  const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
-  document.getElementById('progress').style.width = pct + '%';
-  document.getElementById('scroll-top').classList.toggle('show', doc.scrollTop > 400);
-  if (document.getElementById('view-chapter').style.display !== 'none') saveProgress();
-});
-
-// ── Keyboard nav ──
-document.addEventListener('keydown', e => {
-  if (document.getElementById('view-chapter').style.display === 'none') return;
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
-  if (e.key === 'Escape') showHome();
-});
-
-// ── Text-to-Speech (free, browser-native, works on mobile + desktop) ──
-let ttsUtterances = [];
-let ttsIdx = 0;
-let ttsActive = false;
-let ttsPaused = false;
-let ttsVoices = [];
-let ttsRate = 1;
-let ttsPitch = 1;
-
-function loadVoices() {
-  ttsVoices = speechSynthesis.getVoices().filter(v => v.lang === 'en-GB' || v.lang === 'en-US');
-  if (!ttsVoices.length) ttsVoices = speechSynthesis.getVoices().filter(v => v.lang === 'en') 
-
-                    if (!ttsVoices.length) 
-                        ttsVoices = speechSynthesis.getVoices();
-                    
-                
-
-                const sel = document.getElementById('tts-voice');
-                let options = '';
-                if (ttsVoices.length > 0) {
-                    options = ttsVoices.map((v, i) => `<option value="${i}">${
-                        v.name
-                    } (${
-                        v.lang
+            const sel = document.getElementById('tts-voice');
+            let options = '';
+            if (ttsVoices.length > 0) {
+                options = ttsVoices.map((v, i) => `<option value="${i}">${v.name
+                    } (${v.lang
                     })</option>`).join('');
-                } else {
-                    options = '<option value="-1" disabled>The frequency is silent...</option>';
-                } sel.innerHTML = options;
-            }
-            if ('speechSynthesis' in window) {
-                speechSynthesis.onvoiceschanged = loadVoices;
-                loadVoices();
-            }
+            } else {
+                options = '<option value="-1" disabled>The frequency is silent...</option>';
+            } sel.innerHTML = options;
+        }
+        if ('speechSynthesis' in window) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+            loadVoices();
+        }
 
-            function getProseSentences() {
-                const body = document.getElementById('prose-body');
-                if (! body.dataset.ttsReady) {
-                    const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null);
-                    const textNodes = [];
-                    let n;
-                    while (n = walker.nextNode()) {
-                        if (n.nodeValue.trim()) 
-                            textNodes.push(n);
-                        
+        function getProseSentences() {
+            const body = document.getElementById('prose-body');
+            if (!body.dataset.ttsReady) {
+                const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null);
+                const textNodes = [];
+                let n;
+                while (n = walker.nextNode()) {
+                    if (n.nodeValue.trim())
+                        textNodes.push(n);
 
-                    }
-                    textNodes.forEach(node => {
-                        const parts = node.nodeValue.match(/[^.!?]+[.!?]*\s*/g) || [node.nodeValue];
-                        const frag = document.createDocumentFragment();
-                        parts.forEach(p => {
-                            const span = document.createElement('span');
-                            span.className = 'tts-sentence';
-                            span.textContent = p;
-                            frag.appendChild(span);
-                        });
-                        node.parentNode.replaceChild(frag, node);
+
+                }
+                textNodes.forEach(node => {
+                    const parts = node.nodeValue.match(/[^.!?]+[.!?]*\s*/g) || [node.nodeValue];
+                    const frag = document.createDocumentFragment();
+                    parts.forEach(p => {
+                        const span = document.createElement('span');
+                        span.className = 'tts-sentence';
+                        span.textContent = p;
+                        frag.appendChild(span);
                     });
-                    body.dataset.ttsReady = '1';
-                }
-                return Array.from(body.querySelectorAll('.tts-sentence')).filter(s => s.textContent.trim());
-            }
-
-            // ── Update TTS bar chapter info ──
-            function updateTtsBarInfo() {
-                if (currentIdx < 0) return;
-                const ch = chapters[currentIdx];
-                const num = String(currentIdx + 1).padStart(2, '0');
-                document.getElementById('tts-ch-num').textContent = `Chapter ${num}`;
-                document.getElementById('tts-ch-title').textContent = ch.title;
-                // update prev/next chapter button states
-                const prevBtn = document.getElementById('tts-prev-ch');
-                const nextBtn = document.getElementById('tts-next-ch');
-                if (prevBtn) prevBtn.disabled = currentIdx <= 0;
-                if (nextBtn) nextBtn.disabled = currentIdx >= chapters.length - 1;
-            }
-
-            // ── Navigate to a different chapter while keeping TTS alive ──
-            function ttsNavigateChapter(dir) {
-                const next = currentIdx + dir;
-                if (next < 0 || next >= chapters.length) return;
-                const wasPlaying = speechSynthesis.speaking && !speechSynthesis.paused;
-                ttsStop();
-                loadChapter(next).then(() => {
-                    if (wasPlaying) {
-                        // small delay so the prose renders before we build the queue
-                        setTimeout(() => {
-                            ttsActive = true;
-                            document.getElementById('tts-bar').classList.add('active');
-                            buildQueue();
-                            speechSynthesis.speak(ttsUtterances[0]);
-                            document.getElementById('tts-play').textContent = '⏸';
-                        }, 300);
-                    }
+                    node.parentNode.replaceChild(frag, node);
                 });
+                body.dataset.ttsReady = '1';
             }
+            return Array.from(body.querySelectorAll('.tts-sentence')).filter(s => s.textContent.trim());
+        }
 
-            // ── Update sentence progress bar ──
-            function updateTtsProgress() {
-                const fill = document.getElementById('tts-progress-fill');
-                if (!fill) return;
-                const total = ttsUtterances.length;
-                const pct = total > 0 ? (ttsIdx / total) * 100 : 0;
-                fill.style.width = pct + '%';
-            }
+        // ── Update TTS bar chapter info ──
+        function updateTtsBarInfo() {
+            if (currentIdx < 0)
+                return;
 
-            function toggleTTS() {
-                if (!('speechSynthesis' in window) || ttsVoices.length === 0) {
-                    showToast("The frequency is silent. The colony's transmission is blocked in this vessel.", false);
-                    return;
+
+
+            const ch = chapters[currentIdx];
+            const num = String(currentIdx + 1).padStart(2, '0');
+            document.getElementById('tts-ch-num').textContent = `Chapter ${num}`;
+            document.getElementById('tts-ch-title').textContent = ch.title;
+            // update prev/next chapter button states
+            const prevBtn = document.getElementById('tts-prev-ch');
+            const nextBtn = document.getElementById('tts-next-ch');
+            if (prevBtn)
+                prevBtn.disabled = currentIdx <= 0;
+            if (nextBtn) nextBtn.disabled = currentIdx >= chapters.length - 1;
+
+
+        }
+
+        // ── Navigate to a different chapter while keeping TTS alive ──
+        function ttsNavigateChapter(dir) {
+            const next = currentIdx + dir;
+            if (next < 0 || next >= chapters.length)
+                return;
+
+
+            const wasPlaying = speechSynthesis.speaking && !speechSynthesis.paused;
+            ttsStop();
+            loadChapter(next).then(() => {
+                if (wasPlaying) { // small delay so the prose renders before we build the queue
+                    setTimeout(() => {
+                        ttsActive = true;
+                        document.getElementById('tts-bar').classList.add('active');
+                        buildQueue();
+                        speechSynthesis.speak(ttsUtterances[0]);
+                        document.getElementById('tts-play').textContent = '⏸';
+                    }, 300);
                 }
-                ttsActive = !ttsActive;
-                document.getElementById('tts-bar').classList.toggle('active', ttsActive);
-                document.getElementById('tts-toggle-label').textContent = ttsActive ? 'Hide listen player' : 'Listen to this chapter';
-                if (ttsActive) {
-                    updateTtsBarInfo();
-                } else {
-                    ttsStop();
-                }
-            }
+            });
+        }
 
-            function closeTTS() {
-                ttsActive = false;
-                document.getElementById('tts-bar').classList.remove('active');
-                document.getElementById('tts-toggle-label').textContent = 'Listen to this chapter';
+        // ── Update sentence progress bar ──
+        function updateTtsProgress() {
+            const fill = document.getElementById('tts-progress-fill');
+            if (!fill)
+                return;
+
+
+            const total = ttsUtterances.length;
+            const pct = total > 0 ? (ttsIdx / total) * 100 : 0;
+            fill.style.width = pct + '%';
+        }
+
+        function toggleTTS() {
+            if (!('speechSynthesis' in window) || ttsVoices.length === 0) {
+                showToast("The frequency is silent. The colony's transmission is blocked in this vessel.", false);
+                return;
+            }
+            ttsActive = !ttsActive;
+            document.getElementById('tts-bar').classList.toggle('active', ttsActive);
+            document.getElementById('tts-toggle-label').textContent = ttsActive ? 'Hide listen player' : 'Listen to this chapter';
+            if (ttsActive) {
+                updateTtsBarInfo();
+            } else {
                 ttsStop();
             }
+        }
 
-            function buildQueue() {
-                const sentences = getProseSentences();
-                ttsUtterances = sentences.map((span, i) => {
-                    const u = new SpeechSynthesisUtterance(span.textContent);
-                    u.rate = ttsRate;
-                    u.pitch = ttsPitch;
-                    const voiceIdx = parseInt(document.getElementById('tts-voice').value, 10);
-                    if (voiceIdx >= 0 && ttsVoices[voiceIdx]) u.voice = ttsVoices[voiceIdx];
-                    u.onstart = () => {
-                        document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
-                        span.classList.add('tts-reading');
-                        span.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                        updateTtsProgress();
-                    };
-                    u.onend = () => {
-                        if (ttsActive && !ttsPaused && i === ttsIdx) {
-                            ttsIdx++;
-                            if (ttsIdx < ttsUtterances.length) {
-                                speechSynthesis.speak(ttsUtterances[ttsIdx]);
-                            } else {
-                                ttsFinished();
-                            }
+        function closeTTS() {
+            ttsActive = false;
+            document.getElementById('tts-bar').classList.remove('active');
+            document.getElementById('tts-toggle-label').textContent = 'Listen to this chapter';
+            ttsStop();
+        }
+
+        function buildQueue() {
+            const sentences = getProseSentences();
+            ttsUtterances = sentences.map((span, i) => {
+                const u = new SpeechSynthesisUtterance(span.textContent);
+                u.rate = ttsRate;
+                u.pitch = ttsPitch;
+                const voiceIdx = parseInt(document.getElementById('tts-voice').value, 10);
+                if (voiceIdx >= 0 && ttsVoices[voiceIdx])
+                    u.voice = ttsVoices[voiceIdx];
+
+
+                u.onstart = () => {
+                    document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
+                    span.classList.add('tts-reading');
+                    span.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    updateTtsProgress();
+                };
+                u.onend = () => {
+                    if (ttsActive && !ttsPaused && i === ttsIdx) {
+                        ttsIdx++;
+                        if (ttsIdx < ttsUtterances.length) {
+                            speechSynthesis.speak(ttsUtterances[ttsIdx]);
+                        } else {
+                            ttsFinished();
                         }
-                    };
-                    return u;
-                });
-                updateTtsProgress();
-            }
+                    }
+                };
+                return u;
+            });
+            updateTtsProgress();
+        }
 
-            function ttsFinished() {
-                document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
-                document.getElementById('tts-play').textContent = '▶';
-                document.getElementById('tts-progress-fill').style.width = '100%';
-                ttsIdx = 0;
-            }
+        function ttsFinished() {
+            document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
+            document.getElementById('tts-play').textContent = '▶';
+            document.getElementById('tts-progress-fill').style.width = '100%';
+            ttsIdx = 0;
+        }
 
-            function ttsPlayPause() {
-                const btn = document.getElementById('tts-play');
-                if (speechSynthesis.speaking && !speechSynthesis.paused) {
-                    speechSynthesis.pause();
-                    ttsPaused = true;
-                    btn.textContent = '▶';
-                    return;
-                }
-                if (speechSynthesis.paused) {
-                    speechSynthesis.resume();
-                    ttsPaused = false;
-                    btn.textContent = '⏸';
-                    return;
-                }
-                if (!ttsUtterances.length) buildQueue();
+        function ttsPlayPause() {
+            const btn = document.getElementById('tts-play');
+            if (speechSynthesis.speaking && !speechSynthesis.paused) {
+                speechSynthesis.pause();
+                ttsPaused = true;
+                btn.textContent = '▶';
+                return;
+            }
+            if (speechSynthesis.paused) {
+                speechSynthesis.resume();
                 ttsPaused = false;
                 btn.textContent = '⏸';
+                return;
+            }
+            if (!ttsUtterances.length)
+                buildQueue();
+
+
+
+            ttsPaused = false;
+            btn.textContent = '⏸';
+            speechSynthesis.speak(ttsUtterances[ttsIdx]);
+        }
+
+        // Skip forward or back by one sentence
+        function ttsSkipSentence(dir) {
+            if (!ttsUtterances.length)
+                buildQueue();
+
+
+
+            const target = ttsIdx + dir;
+            if (target < 0 || target >= ttsUtterances.length)
+                return;
+
+
+
+            const wasPlaying = speechSynthesis.speaking && !speechSynthesis.paused;
+            speechSynthesis.cancel();
+            ttsIdx = target;
+            ttsPaused = false;
+            updateTtsProgress();
+            if (wasPlaying || dir > 0) { // resume playing from the new position
+                document.getElementById('tts-play').textContent = '⏸';
                 speechSynthesis.speak(ttsUtterances[ttsIdx]);
             }
+        }
 
-            // Skip forward or back by one sentence
-            function ttsSkipSentence(dir) {
-                if (!ttsUtterances.length) buildQueue();
-                const target = ttsIdx + dir;
-                if (target < 0 || target >= ttsUtterances.length) return;
-                const wasPlaying = speechSynthesis.speaking && !speechSynthesis.paused;
+        function ttsStop() {
+            if ('speechSynthesis' in window)
                 speechSynthesis.cancel();
-                ttsIdx = target;
-                ttsPaused = false;
-                updateTtsProgress();
-                if (wasPlaying || dir > 0) {
-                    // resume playing from the new position
-                    document.getElementById('tts-play').textContent = '⏸';
+
+
+
+            ttsUtterances = [];
+            ttsIdx = 0;
+            ttsPaused = false;
+            const btn = document.getElementById('tts-play');
+            if (btn)
+                btn.textContent = '▶';
+
+
+
+            const fill = document.getElementById('tts-progress-fill');
+            if (fill)
+                fill.style.width = '0%';
+
+
+
+            document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
+        }
+
+        function ttsRateChange(val) {
+            ttsRate = parseFloat(val);
+            const v = document.getElementById('tts-rate-val');
+            if (v)
+                v.textContent = '×' + parseFloat(val).toFixed(1);
+
+
+
+            if (speechSynthesis.speaking) {
+                const wasIdx = ttsIdx;
+                speechSynthesis.cancel();
+                buildQueue();
+                ttsIdx = wasIdx;
+                speechSynthesis.speak(ttsUtterances[ttsIdx]);
+            }
+        }
+
+        function ttsPitchChange(val) {
+            ttsPitch = parseFloat(val);
+            if (speechSynthesis.speaking) {
+                const wasIdx = ttsIdx;
+                speechSynthesis.cancel();
+                buildQueue();
+                ttsIdx = wasIdx;
+                speechSynthesis.speak(ttsUtterances[ttsIdx]);
+            }
+        }
+
+        function ttsVoiceChange() {
+            if (speechSynthesis.speaking || ttsUtterances.length) {
+                const wasIdx = ttsIdx;
+                speechSynthesis.cancel();
+                buildQueue();
+                ttsIdx = wasIdx;
+                if (!ttsPaused)
                     speechSynthesis.speak(ttsUtterances[ttsIdx]);
-                }
-            }
 
-            function ttsStop() {
-                if ('speechSynthesis' in window) speechSynthesis.cancel();
-                ttsUtterances = [];
-                ttsIdx = 0;
-                ttsPaused = false;
-                const btn = document.getElementById('tts-play');
-                if (btn) btn.textContent = '▶';
-                const fill = document.getElementById('tts-progress-fill');
-                if (fill) fill.style.width = '0%';
-                document.querySelectorAll('.tts-sentence').forEach(s => s.classList.remove('tts-reading'));
-            }
 
-            function ttsRateChange(val) {
-                ttsRate = parseFloat(val);
-                const v = document.getElementById('tts-rate-val');
-                if (v) v.textContent = '×' + parseFloat(val).toFixed(1);
-                if (speechSynthesis.speaking) {
-                    const wasIdx = ttsIdx;
-                    speechSynthesis.cancel();
-                    buildQueue();
-                    ttsIdx = wasIdx;
-                    speechSynthesis.speak(ttsUtterances[ttsIdx]);
-                }
-            }
 
-            function ttsPitchChange(val) {
-                ttsPitch = parseFloat(val);
-                if (speechSynthesis.speaking) {
-                    const wasIdx = ttsIdx;
-                    speechSynthesis.cancel();
-                    buildQueue();
-                    ttsIdx = wasIdx;
-                    speechSynthesis.speak(ttsUtterances[ttsIdx]);
-                }
             }
+        }
 
-            function ttsVoiceChange() {
-                if (speechSynthesis.speaking || ttsUtterances.length) {
-                    const wasIdx = ttsIdx;
-                    speechSynthesis.cancel();
-                    buildQueue();
-                    ttsIdx = wasIdx;
-                    if (!ttsPaused) speechSynthesis.speak(ttsUtterances[ttsIdx]);
-                }
-            }
+        init();
+    </script>
+</body>
+</body>
+</body>
 
-            init();
-            </script>
-        </body>
-    </body>
-</body></html></body></html>
+</html>
+</body>
+
+</html>
+</body>
+
+</html>
+</body>
+
+</html>
+</body>
+
+</html>
+</body>
+
+</html>
